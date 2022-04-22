@@ -203,7 +203,6 @@ public class JavaApplication {
                                 if (detail.department.equals(dept)) {
                                     System.out.println(detail);
                                     checking = false;
-                                    break;
                                 }
                             }
                             if (checking) {
@@ -372,7 +371,7 @@ public class JavaApplication {
                             System.out.println("Enter subject name:");
                             String subject = sc.next().toUpperCase();
                             if (checkSubjects.contains(subject)) {
-                                for (Student detail : studentDetails) {
+                                for (Student detail : studentDetails)
                                     {
                                         if (detail.studentId == academics && !detail.marksAddorNot) {
                                             for (int i = 0; i < detail.subject.length; i++) {
@@ -387,7 +386,7 @@ public class JavaApplication {
                                         System.out.println("Marks are not added");
                                     } else {checking = true;}
                                     break;
-                                }
+
                             } else {
                                 System.out.println("Subject not Found!!! type correctly");
                             }
