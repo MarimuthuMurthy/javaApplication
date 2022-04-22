@@ -2,20 +2,20 @@ import javax.security.auth.Subject;
 import java.util.ArrayList;
 import java.util.Scanner;
 class CseDepartment{
-    static String[] cseSubjects={"java","html","css"};
-    static String[] faculty={"A","B","C"};
+    static String[] cseSubjects={"JAVA","HTML","DATASTRUCTURES","PYTHON","C"};
+    static String[] cseFaculty={"cseFaculty1","cseFaculty2","cseFaculty3","cseFaculty4","cseFaculty5"};
 }
 class EceDepartment{
-    static String[] cseSubjects={"analog","system","communication"};
-    static String[] ecefaculty={"D","E","F"};
+    static String[] cseSubjects={"ANALOG","SYSTEM","COMMUNICATION","WIRELESS","NETWORKS"};
+    static String[] ecefaculty={"eceFaculty1","eceFcaulty2","eceFaculty3","eceFaculty4","eceFaculty5"};
 }
 class MechanicalDepartment{
-    static String[] mechanicalSubjects={"weld","shield","mech3"};
-    static String[] mechfaculty={"g","h","i"};
+    static String[] mechanicalSubjects={"THERMODYNAMICS","MACHINEDESIGN","FLUIDMECHANICS","SOLIDMECHANICS","THEORYOFMACHINES"};
+    static String[] mechfaculty={"mechFaculty1","mechfaculty2","mechfaculty3","mechFaculty4","mechFaculty5"};
 }
 class ItDepartment{
-    static String[] itSubjects={"javait","htmlit","cssit"};
-    static String[] itfaculty={"j","k","l"};
+    static String[] itSubjects={"SYSTEMSOFTWARE","INTERNETPROGRAMMING","OPERATINGSYSTEM","OBJECTORIENTEDPROGRAMMING","DATAWAREHOUSING"};
+    static String[] itfaculty={"itFcaulty1","itfcaulty2","itfaculty3","itFaculty4","itFaculty5"};
 }
 class Student
 {
@@ -40,10 +40,21 @@ class Student
         this.faculty=faculty;
         marks=new int[subject.length];
     }
-    public void getScore(){
-        System.out.println( subject[0]+" "+marks[0]+" \n"+
-                subject[1]+" "+marks[1]+" \n"+
-                subject[2]+" "+marks[2]+" \n");
+    public void ScoreCard()
+    {
+        for(int i=0;i<subject.length;i++)
+        {
+            System.out.println("Subject Name "+subject[i]+" SubjectScore :"+marks[i]);
+        }
     }
-    public String toString(){return studentId+" "+studentName+" "+phoneNo+" "+roomNo+" "+hostelName+" "+department;}
+    public String toString(){return
+                            "**********************************"+
+                            " \n"+"Student Id :" + studentId+
+                            " \n"+"Student Name :"+studentName+
+                            " \n"+"Student PhoneNO. :"+phoneNo+
+                            " \n"+"Student RoomNo :"+roomNo+" "+
+                            " \n"+"Student Hostel :"+hostelName+
+                            " \n"+"Student Department :"+department+
+                            " \n"+"*********************************";
+                            }
 }
