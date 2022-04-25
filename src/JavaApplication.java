@@ -17,7 +17,7 @@ final class Validation{
     final private String password4="abc@1234";
     final private String email5="vtu15896@veltech.edu.in";
     final private String password5="abc@12345";
-    final private LinkedHashMap<String ,String> lhs=new LinkedHashMap<>();
+    final private HashMap<String ,String> lhs=new LinkedHashMap<>();
     final private String authorization="5656";
     Validation(){
         lhs.put(email1,password1);
@@ -41,24 +41,15 @@ final class Validation{
 }
 public class JavaApplication {
     public static Student s1;
+    public static Student s2;
     public static Validation v1;
     public static Scanner sc;
     public static int studentId=0;
     static int count=0;
     static boolean checking=true;
     static boolean end=true;
-    static List<Student> studentDetails=new ArrayList<>();
-    public static int[] getMarks(Student s){
-        if(s.marksAddorNot) {
-            for (int i = 0; i < s.subject.length; i++) {
-                System.out.print("Enter " + s.subject[i] + " marks:");
-                s.marks[i] = sc.nextInt();
-            }
-            s.marksAddorNot=false;
-        }
-        return s.marks;
-    }
 
+    static List<Student> studentDetails=new ArrayList<>();
     public static Student getDetails()
     {
         Scanner sc=new Scanner(System.in);
@@ -77,7 +68,7 @@ public class JavaApplication {
         }
         System.out.print("Enter student room no:");
         String studentRoom = sc.next();
-        while (!(studentRoom.matches("[0-9]+"))) {
+        while (!(studentRoom.matches("[0-9]{1,9}"))) {
             System.out.println("Invalid Room Number! please enter again");
             studentRoom = sc.next();
         }
@@ -96,24 +87,37 @@ public class JavaApplication {
         }
         String[] subject=null;
         String[] faculty=null;
+        SubjectDetails[] subjectDetails=new SubjectDetails[5];
         if(departmentName.equals("cse")){
             subject=CseDepartment.cseSubjects;
             faculty=CseDepartment.cseFaculty;
+            for(int i=0;i<subject.length;i++){
+                subjectDetails[i]=new SubjectDetails(subject[i],faculty[i],-1);
+            }
         }
         if(departmentName.equals("ece")){
-            subject=EceDepartment.cseSubjects;
+            subject=EceDepartment.eceSubjects;
             faculty=EceDepartment.ecefaculty;
+            for(int i=0;i<subject.length;i++){
+                subjectDetails[i]=new SubjectDetails(subject[i],faculty[i],-1);
+            }
         }
         if(departmentName.equals("mech")){
             subject=MechanicalDepartment.mechanicalSubjects;
             faculty=MechanicalDepartment.mechfaculty;
+            for(int i=0;i<subject.length;i++){
+                subjectDetails[i]=new SubjectDetails(subject[i],faculty[i],-1);
+            }
         }
         if(departmentName.equals("it")){
             subject=ItDepartment.itSubjects;
             faculty=ItDepartment.itfaculty;
+            for(int i=0;i<subject.length;i++){
+                subjectDetails[i]=new SubjectDetails(subject[i],faculty[i],-1);
+            }
         }
         studentId += 1;
-        s1 = new Student(studentId, studentName, studentPhone, intStudentRoom, studentHostel,departmentName,subject,faculty );
+        s1 = new Student(studentId, studentName, studentPhone, intStudentRoom, studentHostel,departmentName,subject,faculty,subjectDetails);
         return s1;
     }
     public static int studentIdCheck(int x) {
@@ -124,25 +128,29 @@ public class JavaApplication {
             }
         }return present;
     }
+    public static Student checkStudent(int id){
+        for(Student student:studentDetails){
+            if(student.studentId==id){
+                return student;
+            }
+        }return null;
+    }
     public static void process() {
         Scanner sc = new Scanner(System.in);
-
-        System.out.println("\n ***** ADD STUDENT DETAILS: *****" +
-                "\n ***** SEE STUDENT DETAILS: *****" +
-                "\n ***** REMOVE STUDENT DETAILS: *****" +
-                "\n ***** SEARCH RECORD: *****" +
-                "\n ***** UPDATE DETAILS: *****" +
-                "\n ***** ADD MARKS OF STUDNET: *****" +
-                "\n ***** SHOW THE MARKS OF STUDENT: *****" +
-                "\n ***** END THE PROCESS: ***** ");
         while (end) {
-            System.out.println("<<<<<type>>>>");
-            System.out.println(" add want remove search update score addmarks end:");
+            System.out.println("\n 1. ADD STUDENT DETAILS: *****" +
+                    "\n 2. SEE STUDENT DETAILS: *****" +
+                    "\n 3. REMOVE STUDENT DETAILS: *****" +
+                    "\n 4. UPDATE DETAILS: *****" +
+                    "\n 5. ADD MARKS OF STUDNET: *****" +
+                    "\n 6. SEARCH RECORD: *****" +
+                    "\n 7. SHOW THE MARKS OF STUDENT: *****" +
+                    "\n 8. END THE PROCESS: ***** ");
             System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
             String user = sc.next().toLowerCase();
-            if (!(user.equals("add") || user.equals("want") || user.equals("end") || user.equals("remove") || user.equals("search") || user.equals("update") || user.equals("marks") || user.equals("show") || user.equals("addmarks") || user.equals("score")||user.equals("subjectandfaculty"))) {
+            if (!(user.matches("[0-8]"))) {
                 System.out.println("Input is invalid!please Try again");
-            } else if (user.equals("add")) {
+            } else if (user.equals("1")) {
                 Student s2;
                 try {
                     s2 = getDetails();
@@ -176,19 +184,19 @@ public class JavaApplication {
                     System.out.println(e.getMessage());
                 }
 
-            } else if (user.equals("want")) {
+            } else if (user.equals("2")) {
                 if (studentDetails.isEmpty()) {
                     System.out.println("NO RECORDS FOUND");
                 } else {
                     System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _");
                     System.out.println("press 1:for all student details");
                     System.out.println("press 2:for departmentwise students");
-                    String selection=sc.next();
-                    while(!(selection.matches("[1-2]*"))){
+                    String selection = sc.next();
+                    while (!(selection.matches("[1-2]*"))) {
                         System.out.println("OPTION IS INVALID!!!!!type correctly");
-                        selection= sc.next();
+                        selection = sc.next();
                     }
-                    int select=Integer.parseInt(selection);
+                    int select = Integer.parseInt(selection);
                     System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _");
                     switch (select) {
                         case 2:
@@ -207,7 +215,9 @@ public class JavaApplication {
                             }
                             if (checking) {
                                 System.out.println("******" + dept + " students are not found *******");
-                            }else{checking=true;}
+                            } else {
+                                checking = true;
+                            }
                             break;
                         case 1:
                             for (Student detail : studentDetails) {
@@ -219,7 +229,7 @@ public class JavaApplication {
                             System.out.println("TYPE CORRECTLY");
                     }
                 }
-            } else if (user.equals("remove")) {
+            } else if (user.equals("3")) {
                 if (studentDetails.isEmpty()) {
                     System.out.println("NO RECORDS FOUND");
                 } else {
@@ -231,29 +241,15 @@ public class JavaApplication {
                         remover = sc.next();
                     }
                     int remove = Integer.parseInt(remover);
-                    for (Student detail : studentDetails) {
-                        if (detail.studentId == remove) {
-                            studentDetails.remove(detail);
-                            System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _");
-                            System.out.println(remove + " Id record removed succesfully");
-                            System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _");
-                            checking = false;
-                            break;
-                        }
-                    }
-                    if (checking) {
-                        System.out.println("Student is not present!!!!!!");
+                    Student student = checkStudent(remove);
+                    if (student != null) {
+                        studentDetails.remove(student);
+                        System.out.println(remove + " Id record removed succesfully");
                     } else {
-                        checking = true;
+                        System.out.println("Student is not present!!!!!!");
                     }
-                    for (Student detail : studentDetails) {
-                        if (detail.studentId > remove) {
-                            detail.studentId = detail.studentId - 1;
-                        }
-                    }
-                    studentId -= 1;
                 }
-            } else if (user.equals("update")) {
+            } else if (user.equals("4")) {
                 System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
                 System.out.println("******PLEASE ENTER YOUR PIN*******");
                 String pin = sc.next();
@@ -299,100 +295,76 @@ public class JavaApplication {
                 } else {
                     System.out.println("INCORRECT PIN");
                 }
-            } else if (user.equals("addmarks")) {
+            } else if (user.equals("5")) {
                 if (studentDetails.isEmpty()) {
                     System.out.println("Sorry!!!!! Students are not present");
                 } else {
                     System.out.println("Enter StudentId :");
                     int studentId = sc.nextInt();
-                    if (studentIdCheck(studentId) == 1) {
-                        for (Student student : studentDetails) {
-                            if (student.studentId == studentId && student.marksAddorNot) {
-                                student.marks = getMarks(student);
-                                System.out.println("Marks successfully added");
-                                checking = false;
-                                break;
+                    s2 = checkStudent(studentId);
+                    if (s2 != null) {
+                        for (int i = 0; i < s2.subjectDetails.length; i++) {
+                            System.out.println("If you want to add " + s2.subjectDetails[i].subjectName + " marks: type( 1 for yes / 2 for no)");
+                            String askMarks = sc.next();
+                            while (!(askMarks.matches("[1-2]"))) {
+                                System.out.println("WRONG INPUT");
+                                askMarks = sc.next();
                             }
-                        }
-                        if (checking) {
-                            System.out.println("Marks are already Added");
-                        } else {
-                            checking = true;
+                            if (askMarks.equals("1") && s2.subjectDetails[i].subjectMarkAddorNOt) {
+                                System.out.println("enter marks: ");
+                                s2.subjectDetails[i].setSubjectName(sc.nextInt());
+                            }
+                            else if(askMarks.equals("1") && !s2.subjectDetails[i].subjectMarkAddorNOt)
+                            {
+                                System.out.println("marks of "+ s2.subjectDetails[i].subjectName +" is already added");
+                            }
                         }
                     } else {
                         System.out.println("Student Id is not present");
                     }
                 }
-            } else if (user.equals("search")) {
+            } else if (user.equals("6")) {
                 System.out.println("Please enter student Id:");
                 int search = sc.nextInt();
-                for (Student detail : studentDetails) {
-                    if (search == detail.studentId) {
-                        System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _");
-                        System.out.println("Record Found");
-                        System.out.println(detail);
-                        System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _");
-                    }
+                if (checkStudent(search) != null) {
+                    System.out.println(checkStudent(search));
+                } else {
+                    System.out.println("ID NOT FOUND");
                 }
-            }
-            else if(user.equals("score")) {
+            } else if (user.equals("7")) {
                 System.out.println("Enter the studentId: ");
                 int academics = sc.nextInt();
-                if(studentIdCheck(academics)==1) {
+                Student s;
+                s = checkStudent(academics);
+                if (s != null) {
                     System.out.println("type 1 : all subjects score");
                     System.out.println("type 2 : particular subject score");
                     int switch1 = sc.nextInt();
                     switch (switch1) {
                         case 1:
-                            for (Student detail : studentDetails) {
-                                if (detail.studentId == academics && !detail.marksAddorNot) {
-                                    detail.ScoreCard();
-                                    checking = false;
-                                    break;
-                                }
-                            }
-                            if (checking) {
-                                System.out.println("Marks are not added");
-                            } else {
-                                checking = true;
-                            }
+                            s.ScoreCard();
                             break;
                         case 2:
-                            ArrayList<String> checkSubjects = new ArrayList<>();
-                            for (Student detail : studentDetails) {
-                                if (detail.studentId == academics) {
-                                    for (int i = 0; i < detail.subject.length; i++) {
-                                        System.out.println("Subject  " + detail.subject[i]);
-                                    }
-                                    checkSubjects.addAll(Arrays.asList(detail.subject));
-                                    break;
-                                }
+                            for (int i = 0; i < s.subjectDetails.length; i++) {
+                                System.out.println(i + " " + s.subjectDetails[i].subjectName);
                             }
-                            System.out.println("Enter subject name:");
-                            String subject = sc.next().toUpperCase();
-                            if (checkSubjects.contains(subject)) {
-                                for (Student detail : studentDetails)
-                                    {
-                                        if (detail.studentId == academics && !detail.marksAddorNot) {
-                                            for (int i = 0; i < detail.subject.length; i++) {
-                                                if (detail.subject[i].equals(subject)) {
-                                                    checking = false;
-                                                    System.out.println(detail.marks[i]);
-                                                }
-                                            }
-                                        }
-                                    }
-                                    if (checking) {
-                                        System.out.println("Marks are not added");
-                                    } else {checking = true;}
-                                    break;
-
-                            } else {
-                                System.out.println("Subject not Found!!! type correctly");
+                            System.out.println("TYPE SUBJECT NUMBER:");
+                            String subjectNum = sc.next();
+                            while(!(subjectNum.matches("[0-4]")))
+                            {
+                                System.out.println("Enter Correct number");
+                                subjectNum= sc.next();
+                            }
+                            int subjectNumber=Integer.parseInt(subjectNum);
+                            if(!(s.subjectDetails[subjectNumber].subjectMarkAddorNOt)){
+                            System.out.println("the " + s.subjectDetails[subjectNumber].subjectName + " marks are :" + s.subjectDetails[subjectNumber].subjectMark);
+                            }
+                            else{
+                                System.out.println("***********MARKS ARE NOT ADDED*************");
                             }
                     }
                 }else{
-                    System.out.println("*********Student is not present*****************");
+                    System.out.println("STUDENT ID NOT FOUND");
                 }
             }
             else if(user.equals("subjectandfaculty"))
@@ -401,15 +373,15 @@ public class JavaApplication {
                 int studId=sc.nextInt();
                 if(studentIdCheck(studId)==1) {
                     for (Student student : studentDetails) {
-                        for (int i = 0; i < student.subject.length; i++) {
-                            System.out.println("subject " + student.subject[i] + "|**********| Faculty :" + student.faculty[i]);
-                        }
+//                        for (int i = 0; i < student.subject.length; i++) {
+//                            System.out.println("subject " + student.subject[i] + "|**********| Faculty :" + student.faculty[i]);
+//                        }
                     }
                 }else{
                     System.out.println("Student ID NOT FOUND");
                 }
             }
-            else if(user.equals("end"))
+            else if(user.equals("8"))
             {
                 end=false;
                 System.out.println("*****************************");
