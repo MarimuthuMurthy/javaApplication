@@ -10,7 +10,7 @@ class SubjectDetails{
         this.subjectName=subjectName;
         this.subjectFaculty=subjectFaculty;
     }
-    public void setSubjectName(int subjectMark)
+    public void setSubjectMark(int subjectMark)
     {
         if(subjectMark>=0)
         {
@@ -62,14 +62,14 @@ class Student
 
         }
     }
-    public String toString(){return
-                            "**********************************"+
-                            " \n"+"Student Id :" + studentId+
-                            " \n"+"Student Name :"+studentName+
-                            " \n"+"Student PhoneNO. :"+phoneNo+
-                            " \n"+"Student RoomNo :"+roomNo+" "+
-                            " \n"+"Student Hostel :"+hostelName+
-                            " \n"+"Student Department :"+department+
-                            " \n"+"*********************************";
-                            }
+    public String toString(){
+        return "**********************************"+
+                " \n"+"Student Id :" + studentId+
+                " \n"+"Student Name :"+studentName+
+                " \n"+"Student PhoneNO. :"+phoneNo+
+                " \n"+"Student RoomNo :"+roomNo+" "+
+                " \n"+"Student Hostel :"+hostelName+
+                " \n"+"Student Department :"+department+
+                " \n"+"*********************************";
+    }
 }

@@ -17,7 +17,7 @@ final class Validation{
     final private String password4="abc@1234";
     final private String email5="vtu15896@veltech.edu.in";
     final private String password5="abc@12345";
-    final private HashMap<String ,String> lhs=new LinkedHashMap<>();
+    final private HashMap<String,String> lhs=new LinkedHashMap<>();
     final private String authorization="5656";
     Validation(){
         lhs.put(email1,password1);
@@ -56,34 +56,60 @@ public class JavaApplication {
         System.out.print("Enter student name:");
         String studentName = sc.nextLine();
 
-        while (!(studentName.matches("^[A-Za-z.\\s]*"))) {
+        while (!checkName(studentName)) {
             System.out.println("Invalid name! please enter again");
             studentName = sc.nextLine();
         }
         System.out.print("Enter student phone number:");
         String studentPhone = sc.next();
-        while (!(studentPhone.matches("[0-9]{10}"))) {
+        while (!checkPhoneNumber(studentPhone)) {
             System.out.println("Invalid Phone Number! please enter again");
             studentPhone = sc.next();
         }
         System.out.print("Enter student room no:");
         String studentRoom = sc.next();
-        while (!(studentRoom.matches("[0-9]{1,9}"))) {
+        while (!checkRoomNo(studentRoom)) {
             System.out.println("Invalid Room Number! please enter again");
             studentRoom = sc.next();
         }
-         int intStudentRoom=Integer.parseInt(studentRoom);
-        System.out.print("Enter student HostelName:");
+        int intStudentRoom=Integer.parseInt(studentRoom);
+        System.out.print("Select HostelName:");
+        System.out.println("\n"+"1.Prince..........."+
+                           "\n"+"2.Leaders..........");
         String studentHostel = sc.next();
-        if(!(studentHostel.equalsIgnoreCase("prince")||studentHostel.equalsIgnoreCase("leaders"))){
-
-            throw new HostelNameException("Sorry! you are not allowed in the hostel");
+        int studentHostel1=Integer.parseInt(studentHostel);
+        switch(studentHostel1){
+            case 1:
+                studentHostel="prince";
+                break;
+            case 2:
+                studentHostel="leaders";
+                break;
+            default:
+                throw new HostelNameException("Sorry! you are not allowed in this institute");
         }
-        System.out.print("Enter Department Name: ");
-        String departmentName=sc.next().toLowerCase();
-        while(!(departmentName.equals("cse") || departmentName.equals("ece") || departmentName.equals("mech") || departmentName.equals("it"))){
-            System.out.println("Invalid department");
-            departmentName= sc.next();;
+        System.out.println("\n"+"*********select department*********** "+
+                         "\n"+"1.CSE.........."+
+                         "\n"+"2.ECE.........."+
+                         "\n"+"3.MECH........."+
+                         "\n"+"4.IT...........");
+        String departmentName=sc.next();
+        int departmentName1=Integer.parseInt(departmentName);
+        switch(departmentName1){
+            case 1:
+                departmentName="cse";
+                break;
+            case 2:
+                departmentName="ece";
+                break;
+            case 3:
+                departmentName="mech";
+                break;
+            case 4:
+                departmentName="it";
+                break;
+            default:
+                throw new HostelNameException("sorry!!!other departments students are allowed");
         }
         String[] subject=null;
         String[] faculty=null;
@@ -120,13 +146,17 @@ public class JavaApplication {
         s1 = new Student(studentId, studentName, studentPhone, intStudentRoom, studentHostel,departmentName,subject,faculty,subjectDetails);
         return s1;
     }
-    public static int studentIdCheck(int x) {
-        int present=0;
-        for(Student detail:studentDetails) {
-            if(detail.studentId==x) {
-                present=1;
-            }
-        }return present;
+    public static boolean checkName(String name){
+        if(name.matches("[A-Za-z.\\s]*")){return true;}
+        else{return false;}
+    }
+    public static boolean checkPhoneNumber(String phoneNo){
+        if(phoneNo.matches("[0-9]{10}")){return true;}
+        else{return false;}
+    }
+    public static boolean checkRoomNo(String roomNo){
+        if(roomNo.matches("[0-9]{1,9}")){return true;}
+        else{return false;}
     }
     public static Student checkStudent(int id){
         for(Student student:studentDetails){
@@ -138,17 +168,18 @@ public class JavaApplication {
     public static void process() {
         Scanner sc = new Scanner(System.in);
         while (end) {
-            System.out.println("\n 1. ADD STUDENT DETAILS: *****" +
-                    "\n 2. SEE STUDENT DETAILS: *****" +
-                    "\n 3. REMOVE STUDENT DETAILS: *****" +
-                    "\n 4. UPDATE DETAILS: *****" +
-                    "\n 5. ADD MARKS OF STUDNET: *****" +
-                    "\n 6. SEARCH RECORD: *****" +
-                    "\n 7. SHOW THE MARKS OF STUDENT: *****" +
-                    "\n 8. END THE PROCESS: ***** ");
+            System.out.println("\n***** 1. ADD STUDENT DETAILS: *****" +
+                    "\n***** 2. SEE STUDENT DETAILS: *****" +
+                    "\n***** 3. REMOVE STUDENT DETAILS: *****" +
+                    "\n***** 4. UPDATE DETAILS: *****" +
+                    "\n***** 5. ADD MARKS OF STUDNET: *****" +
+                    "\n***** 6. SEARCH RECORD: *****" +
+                    "\n***** 7. SHOW THE MARKS OF STUDENT: *****" +
+                    "\n***** 8. SHOW THE STUDENT SUBJECT AND FACULTY: *****" +
+                    "\n***** 9. END THE PROCESS: ***** ");
             System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
             String user = sc.next().toLowerCase();
-            if (!(user.matches("[0-8]"))) {
+            if (!(user.matches("[0-9]"))) {
                 System.out.println("Input is invalid!please Try again");
             } else if (user.equals("1")) {
                 Student s2;
@@ -262,35 +293,45 @@ public class JavaApplication {
                         System.out.println("NO RECORDS FOUND");
                     } else {
                         System.out.print("Enter StudentId:");
-                        int id = sc.nextInt();
-                        for (Student detail : studentDetails) {
-                            if (detail.studentId == id) {
+                        String id = sc.next();
+                        while(!(id.matches("[0-9]*"))){
+                            System.out.println("Enter Correct studentId");
+                            id=sc.next();
+                        }
+                        studentId=Integer.parseInt(id);
+                        Student s= checkStudent(studentId);
+                        if(s!=null) {
                                 System.out.print("Do you like to change Name:(Y/N)");
                                 String wantChangeName = sc.next().toLowerCase();
                                 if (wantChangeName.equals("y") || wantChangeName.equals("yes")) {
                                     System.out.print("Enter new Name:");
-                                    detail.studentName = sc.next();
+                                    String newName=sc.nextLine();
+                                    while(!checkName(newName)){System.out.println("INVALID NAME,REENTER THE NAME");
+                                    newName= sc.nextLine();}
+                                    s.studentName = newName;
                                 }
                                 System.out.print("Do you like to change Phone Number:(Y/N)");
                                 String wantChangePhone = sc.next().toLowerCase();
                                 if (wantChangePhone.equals("y") || wantChangePhone.equals("yes")) {
                                     System.out.print("Enter new Phone Number:");
-                                    detail.phoneNo = sc.next();
+                                    String newPhoneNumber=sc.next();
+                                    while(!checkPhoneNumber(newPhoneNumber)){System.out.println("INVALID PHONE NUMBER,REENTER NEW PHONE NUMBER");
+                                        newPhoneNumber= sc.next();}
+                                    s.phoneNo = newPhoneNumber;
                                 }
                                 System.out.print("Do you like to change roomNo:(Y/N)");
                                 String wantChangeRoomNo = sc.next();
                                 if (wantChangeRoomNo.equals("y") || wantChangeRoomNo.equals("yes")) {
                                     System.out.print("Enter new roomNumber:");
-                                    detail.roomNo = sc.nextInt();
+                                    String newRoomNo=sc.next();
+                                    while(!checkRoomNo(newRoomNo)){System.out.println("INVALID ROOMNUMBER,REENTER NEW ROOMNUMBER");
+                                        newRoomNo= sc.next();}
+
+                                    s.roomNo = Integer.parseInt(newRoomNo);
                                 }
-                                System.out.print("Do you like to change Hostel:(Y/N)");
-                                String wantChangeHostel = sc.next().toLowerCase();
-                                if (wantChangeHostel.equals("y") || wantChangeHostel.equals("yes")) {
-                                    detail.hostelName = sc.next();
-                                }
-                            }
-                        }
-                        System.out.println("*******SUCESSFULLY UPDATED********");
+                            System.out.println("*******SUCESSFULLY UPDATED********");
+
+                        }else{System.out.println("STUDENT ID NOT FOUND");}
                     }
                 } else {
                     System.out.println("INCORRECT PIN");
@@ -312,7 +353,7 @@ public class JavaApplication {
                             }
                             if (askMarks.equals("1") && s2.subjectDetails[i].subjectMarkAddorNOt) {
                                 System.out.println("enter marks: ");
-                                s2.subjectDetails[i].setSubjectName(sc.nextInt());
+                                s2.subjectDetails[i].setSubjectMark(sc.nextInt());
                             }
                             else if(askMarks.equals("1") && !s2.subjectDetails[i].subjectMarkAddorNOt)
                             {
@@ -367,21 +408,22 @@ public class JavaApplication {
                     System.out.println("STUDENT ID NOT FOUND");
                 }
             }
-            else if(user.equals("subjectandfaculty"))
+            else if(user.equals("8"))
             {
                 System.out.println("Enter the student id :");
                 int studId=sc.nextInt();
-                if(studentIdCheck(studId)==1) {
-                    for (Student student : studentDetails) {
-//                        for (int i = 0; i < student.subject.length; i++) {
-//                            System.out.println("subject " + student.subject[i] + "|**********| Faculty :" + student.faculty[i]);
-//                        }
+                Student student;
+                student=checkStudent(studId);
+                if(student!=null){
+                    for(int i=0;i<student.subjectDetails.length;i++){
+                        System.out.println("Subject :"+student.subjectDetails[i].subjectName +" "+"Faculty Name :"+student.subjectDetails[i].subjectFaculty);
                     }
-                }else{
+                }
+                else{
                     System.out.println("Student ID NOT FOUND");
                 }
             }
-            else if(user.equals("8"))
+            else if(user.equals("9"))
             {
                 end=false;
                 System.out.println("*****************************");
@@ -413,6 +455,8 @@ public class JavaApplication {
             while(end) {
                 process();
             }
+        }else{
+            System.out.println("***********Invalid Details*********");
         }
     }
 }
