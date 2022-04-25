@@ -63,7 +63,7 @@ class Student
         }
     }
     public String toString(){
-        return "**********************************"+
+        return "***********************************"+
                 " \n"+"Student Id :" + studentId+
                 " \n"+"Student Name :"+studentName+
                 " \n"+"Student PhoneNO. :"+phoneNo+

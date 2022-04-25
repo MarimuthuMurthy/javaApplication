@@ -461,7 +461,7 @@ public class JavaApplication {
                 end=false;
                 System.out.println("*****************************");
                 System.out.println("successfully end the process");
-                System.out.println("*****************************");
+                System.out.println("******************************");
 
             }
             else{
