@@ -1,21 +1,21 @@
 import javax.security.auth.Subject;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.*;
 class SubjectDetails{
     String subjectName;
     String subjectFaculty;
     int subjectMark;
-    boolean subjectMarkAddorNOt=true;
     SubjectDetails(String subjectName,String subjectFaculty,int mark){
         this.subjectName=subjectName;
         this.subjectFaculty=subjectFaculty;
+        this.subjectMark=-1;
     }
     public void setSubjectMark(int subjectMark)
     {
         if(subjectMark>=0)
         {
             this.subjectMark=subjectMark;
-            subjectMarkAddorNOt=false;
         }
     }
 }
@@ -56,7 +56,7 @@ class Student
     public void ScoreCard()
     {
         for (SubjectDetails subjectDetail : subjectDetails) {
-            if(!subjectDetail.subjectMarkAddorNOt) {
+            if(!(subjectDetail.subjectMark==-1)) {
                 System.out.println("Subject Name " + subjectDetail.subjectName + " SubjectScore :" + subjectDetail.subjectMark);
             }else{System.out.println("Subject " + subjectDetail.subjectName + " marks are not added");}
 

@@ -352,11 +352,11 @@ public class JavaApplication {
                                 System.out.println("WRONG INPUT");
                                 askMarks = sc.next();
                             }
-                            if (askMarks.equals("1") && s2.subjectDetails[i].subjectMarkAddorNOt) {
+                            if (askMarks.equals("1") && s2.subjectDetails[i].subjectMark==-1) {
                                 System.out.println("enter marks: ");
                                 s2.subjectDetails[i].setSubjectMark(sc.nextInt());
                             }
-                            else if(askMarks.equals("1") && !s2.subjectDetails[i].subjectMarkAddorNOt)
+                            else if(askMarks.equals("1") && !(s2.subjectDetails[i].subjectMark==-1))
                             {
                                 System.out.println("marks of "+ s2.subjectDetails[i].subjectName +" is already added");
                             }
@@ -388,7 +388,7 @@ public class JavaApplication {
                             break;
                         case 2:
                             for (int i = 0; i < s.subjectDetails.length; i++) {
-                                System.out.println(i + " " + s.subjectDetails[i].subjectName);
+                                System.out.println("press "+i + " for " + s.subjectDetails[i].subjectName);
                             }
                             System.out.println("TYPE SUBJECT NUMBER:");
                             String subjectNum = sc.next();
@@ -398,12 +398,14 @@ public class JavaApplication {
                                 subjectNum= sc.next();
                             }
                             int subjectNumber=Integer.parseInt(subjectNum);
-                            if(!(s.subjectDetails[subjectNumber].subjectMarkAddorNOt)){
+                            if(!(s.subjectDetails[subjectNumber].subjectMark==-1)){
                             System.out.println("the " + s.subjectDetails[subjectNumber].subjectName + " marks are :" + s.subjectDetails[subjectNumber].subjectMark);
                             }
                             else{
                                 System.out.println("***********MARKS ARE NOT ADDED*************");
                             }
+                        default:
+                            System.out.println("Enter subject code!!!!!correctly");
                     }
                 }else{
                     System.out.println("STUDENT ID NOT FOUND");
@@ -440,7 +442,7 @@ public class JavaApplication {
                     System.out.println("Choose any Subject");
                     int choice = sc.nextInt();
                     if (choice < s.subjectDetails.length) {
-                        if (s.subjectDetails[choice].subjectMarkAddorNOt) {
+                        if (s.subjectDetails[choice].subjectMark==-1) {
                             System.out.println("Subject marks are not added");
                         } else {
                             System.out.println("****Your old "+s.subjectDetails[choice].subjectName+" marks are"+s.subjectDetails[choice].subjectMark);
@@ -482,11 +484,14 @@ public class JavaApplication {
         }
         else{return 0;}
     }
-    public static void main(String[] args){
+    public static void main(String[] args)
+    {
         Scanner sc=new Scanner(System.in);
         System.out.println("******Admin Access******");
-        if(check()==1){
-            while(end) {
+        if(check()==1)
+        {
+            while(end)
+            {
                 process();
             }
         }else{
