@@ -73,9 +73,9 @@ public class JavaApplication {
             studentRoom = sc.next();
         }
         int intStudentRoom=Integer.parseInt(studentRoom);
-        System.out.print("Select HostelName:");
-        System.out.println("\n"+"1.Prince..........."+
-                           "\n"+"2.Leaders..........");
+        System.out.print("*********Select HostelName:*********");
+        System.out.print("\n"+"press 1:Prince..........."+
+                           "\n"+"press 2:Leaders.........."+"\n");
         String studentHostel = sc.next();
         int studentHostel1=Integer.parseInt(studentHostel);
         switch(studentHostel1){
@@ -89,10 +89,10 @@ public class JavaApplication {
                 throw new HostelNameException("Sorry! you are not allowed in this institute");
         }
         System.out.println("\n"+"*********select department*********** "+
-                         "\n"+"1.CSE.........."+
-                         "\n"+"2.ECE.........."+
-                         "\n"+"3.MECH........."+
-                         "\n"+"4.IT...........");
+                         "\n"+"press 1:CSE.........."+
+                         "\n"+"press 2:ECE.........."+
+                         "\n"+"press 3:MECH........."+
+                         "\n"+"press 4:IT...........");
         String departmentName=sc.next();
         int departmentName1=Integer.parseInt(departmentName);
         switch(departmentName1){
@@ -176,10 +176,11 @@ public class JavaApplication {
                     "\n***** 6. SEARCH RECORD: *****" +
                     "\n***** 7. SHOW THE MARKS OF STUDENT: *****" +
                     "\n***** 8. SHOW THE STUDENT SUBJECT AND FACULTY: *****" +
-                    "\n***** 9. END THE PROCESS: ***** ");
+                    "\n***** 9. UPDATE SCORE"+
+                    "\n***** 10. END THE PROCESS: ***** ");
             System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
             String user = sc.next().toLowerCase();
-            if (!(user.matches("[0-9]"))) {
+            if (!(user.matches("[0-9]+"))) {
                 System.out.println("Input is invalid!please Try again");
             } else if (user.equals("1")) {
                 Student s2;
@@ -423,13 +424,46 @@ public class JavaApplication {
                     System.out.println("Student ID NOT FOUND");
                 }
             }
-            else if(user.equals("9"))
+            else if(user.equals("9")) {
+                System.out.println("******UPDATE MARKS*********");
+                System.out.println("Enter student id : ");
+                String studId = sc.next();
+                while (!(studId.matches("[0-9]*"))) {
+                    System.out.println("Enter student id correctly");
+                }
+                int studentId = Integer.parseInt(studId);
+                Student s = checkStudent(studentId);
+                if (s != null) {
+                    for (int i = 0; i < s.subjectDetails.length; i++) {
+                        System.out.println("Type.... " + i + " for update " + s.subjectDetails[i].subjectName + " subject");
+                    }
+                    System.out.println("Choose any Subject");
+                    int choice = sc.nextInt();
+                    if (choice < s.subjectDetails.length) {
+                        if (s.subjectDetails[choice].subjectMarkAddorNOt) {
+                            System.out.println("Subject marks are not added");
+                        } else {
+                            System.out.println("****Your old "+s.subjectDetails[choice].subjectName+" marks are"+s.subjectDetails[choice].subjectMark);
+                            System.out.println("Enter new marks of "+s.subjectDetails[choice].subjectName);
+                            s.subjectDetails[choice].setSubjectMark(sc.nextInt());
+                        }
+                    } else {
+                        System.out.println("Subject code not found!!!!!!!!!!!");
+                    }
+                }else{
+                    System.out.println("Student Id not Found");
+                }
+            }
+            else if(user.equals("10"))
             {
                 end=false;
                 System.out.println("*****************************");
                 System.out.println("successfully end the process");
                 System.out.println("*****************************");
 
+            }
+            else{
+                System.out.println("Invalid input");
             }
         }
     }
