@@ -2,11 +2,13 @@
 import javax.security.auth.Subject;
 import java.util.*;
 class HostelNameException extends RuntimeException{
-    HostelNameException(String hostel){
+    HostelNameException(String hostel)
+    {
         super(hostel);
     }
 }
-final class Validation{
+final class Validation
+{
     final private String email1="vtu15892@veltech.edu.in";
     final private String password1="abc@1";
     final private String email2="vtu15893veltech.edu.in";
@@ -19,7 +21,8 @@ final class Validation{
     final private String password5="abc@12345";
     final private HashMap<String,String> lhs=new LinkedHashMap<>();
     final private String authorization="5656";
-    Validation(){
+    Validation()
+    {
         lhs.put(email1,password1);
         lhs.put(email2,password2);
         lhs.put(email3,password3);
@@ -27,15 +30,19 @@ final class Validation{
         lhs.put(email5,password5);
     }
     Set<String> keys=lhs.keySet();
-    public int checkCredentials(String email,String password){
-        for(String key:keys){
-            if(key.equals(email) && lhs.get(key).equals(password)){
+    public int checkCredentials(String email,String password)
+    {
+        for(String key:keys)
+        {
+            if(key.equals(email) && lhs.get(key).equals(password))
+            {
                 return 1;
             }
         }
         return 0;
     }
-    public int checkAuthorization(String updateAuthorization){
+    public int checkAuthorization(String updateAuthorization)
+    {
         if(updateAuthorization.equals(authorization)){return 1;}else{return 0;}
     }
 }
@@ -114,9 +121,11 @@ public class JavaApplication {
         String[] subject=null;
         String[] faculty=null;
         SubjectDetails[] subjectDetails=new SubjectDetails[5];
+        int academicFee=0;
         if(departmentName.equals("cse")){
             subject=CseDepartment.cseSubjects;
             faculty=CseDepartment.cseFaculty;
+            academicFee=CseDepartment.fees;
             for(int i=0;i<subject.length;i++){
                 subjectDetails[i]=new SubjectDetails(subject[i],faculty[i],-1);
             }
@@ -124,6 +133,7 @@ public class JavaApplication {
         if(departmentName.equals("ece")){
             subject=EceDepartment.eceSubjects;
             faculty=EceDepartment.ecefaculty;
+            academicFee=EceDepartment.fees;
             for(int i=0;i<subject.length;i++){
                 subjectDetails[i]=new SubjectDetails(subject[i],faculty[i],-1);
             }
@@ -131,6 +141,7 @@ public class JavaApplication {
         if(departmentName.equals("mech")){
             subject=MechanicalDepartment.mechanicalSubjects;
             faculty=MechanicalDepartment.mechfaculty;
+            academicFee=MechanicalDepartment.fees;
             for(int i=0;i<subject.length;i++){
                 subjectDetails[i]=new SubjectDetails(subject[i],faculty[i],-1);
             }
@@ -138,13 +149,80 @@ public class JavaApplication {
         if(departmentName.equals("it")){
             subject=ItDepartment.itSubjects;
             faculty=ItDepartment.itfaculty;
+            academicFee=ItDepartment.fees;
             for(int i=0;i<subject.length;i++){
                 subjectDetails[i]=new SubjectDetails(subject[i],faculty[i],-1);
             }
         }
+        System.out.println("*****Your Academic Fees is "+academicFee+" pay atleast 10000 rupees for initial transaction*****");
+        int payment = sc.nextInt();
+        while(payment<10000 || payment>academicFee){
+            if(payment<10000) {
+                System.out.println("Sorry!!!you have atleast 10000 rupees");
+                System.out.print("Enter amount again: ");
+                payment = sc.nextInt();
+            }else {
+                System.out.println("Sorry!!!you pay more than academic fee");
+                System.out.print("Enter amount again: ");
+                payment = sc.nextInt();
+            }
+        }
         studentId += 1;
-        s1 = new Student(studentId, studentName, studentPhone, intStudentRoom, studentHostel,departmentName,subject,faculty,subjectDetails);
+        s1 = new Student(studentId, studentName, studentPhone, intStudentRoom, studentHostel,departmentName,subject,faculty,subjectDetails,payment);
         return s1;
+    }
+    public static int checkDueFee(Student s){
+        switch (s.department) {
+            case "cse":
+                if (CseDepartment.fees == s.academicFee) {
+                    return 0;
+                } else if (s.academicFee < CseDepartment.fees) {
+                    return CseDepartment.fees - s.academicFee;
+                }
+                break;
+            case "ece":
+                if (EceDepartment.fees == s.academicFee) {
+                    return 0;
+                } else if (s.academicFee < EceDepartment.fees) {
+                    return EceDepartment.fees - s.academicFee;
+                }
+                break;
+            case "mech":
+                if (MechanicalDepartment.fees == s.academicFee) {
+                    return 0;
+                } else if (s.academicFee < MechanicalDepartment.fees) {
+                    return MechanicalDepartment.fees - s.academicFee;
+                }
+                break;
+            case "it":
+                if (ItDepartment.fees == s.academicFee) {
+                    return 0;
+                } else if (s.academicFee < ItDepartment.fees) {
+                    return ItDepartment.fees - s.academicFee;
+                }
+                break;
+        }
+        return 0;
+    }
+    public static void payAcademicFee(Student s)
+    {
+        int remainingBalance=checkDueFee(s);
+        if(remainingBalance!=0)
+        {
+            System.out.println("******Your Fees due is " + remainingBalance);
+            System.out.println("Enter amount : ");
+            int amount = sc.nextInt();
+            while(amount>remainingBalance) {
+                System.out.println("you pay more than due!!!please correct amount......");
+                amount= sc.nextInt();
+            }
+            s.academicFee=s.academicFee+amount;
+            System.out.println("****Payment Successful****");
+        }
+        else{
+            System.out.println("*******There is no Fees due******");
+        }
+
     }
     public static boolean checkName(String name){
         if(name.matches("[A-Za-z.\\s]*")){return true;}
@@ -177,7 +255,9 @@ public class JavaApplication {
                     "\n***** 7. SHOW THE MARKS OF STUDENT: *****" +
                     "\n***** 8. SHOW THE STUDENT SUBJECT AND FACULTY: *****" +
                     "\n***** 9. UPDATE SCORE"+
-                    "\n***** 10. END THE PROCESS: ***** ");
+                    "\n***** 10. CHECK FEES DUE"+
+                    "\n***** 11. ACADEMICS FEES PAYMENT"+
+                    "\n***** 12. END THE PROCESS: ***** ");
             System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
             String user = sc.next().toLowerCase();
             if (!(user.matches("[0-9]+"))) {
@@ -456,7 +536,40 @@ public class JavaApplication {
                     System.out.println("Student Id not Found");
                 }
             }
-            else if(user.equals("10"))
+            else if(user.equals("10")){
+                System.out.print("***Enter Student Id : ");
+                String studId = sc.next();
+                while (!(studId.matches("[0-9]*"))) {
+                    System.out.println("Enter student id correctly");
+                }
+                int studentId = Integer.parseInt(studId);
+                Student s = checkStudent(studentId);
+                if(s!=null){
+                int dueAmount=checkDueFee(s);
+                if(dueAmount==0){
+                    System.out.println("*******There is no Fees due******");
+                }
+                else{
+                    System.out.println("******Your Fees due is "+dueAmount+" *********");
+                }}else{
+                    System.out.println("*********Student Id not found********");
+                }
+            }
+            else if(user.equals("11")){
+                System.out.print("***Enter Student Id : ");
+                String studId = sc.next();
+                while (!(studId.matches("[0-9]*"))) {
+                    System.out.println("Enter student id correctly");
+                }
+                int studentId = Integer.parseInt(studId);
+                Student s = checkStudent(studentId);
+                if(s!=null) {
+                    payAcademicFee(s);
+                }else{
+                    System.out.println("******Student Id Not Found*****");
+                }
+            }
+            else if(user.equals("12"))
             {
                 end=false;
                 System.out.println("*****************************");
