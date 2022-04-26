@@ -142,16 +142,19 @@ public class JavaApplication {
         }
     }
     public static boolean checkName(String name){
-        if(name.matches("[A-Za-z.\\s]*")){return true;}
-        else{return false;}
+        return name.matches("[A-Za-z.\\s]*");
     }
     public static boolean checkPhoneNumber(String phoneNo){
-        if(phoneNo.matches("[0-9]{10}")){return true;}
-        else{return false;}
+        return phoneNo.matches("[0-9]{10}");
     }
     public static boolean checkRoomNo(String roomNo){
-        if(roomNo.matches("[0-9]{1,9}")){return true;}
-        else{return false;}
+        return roomNo.matches("[0-9]{1,9}");
+    }
+    public static  String checkStudentId(String studentId){
+        while(!(studentId.matches("[0-9]+"))){
+            System.out.print("StudentId is Invalid , Re enter studentId : ");
+            studentId=sc.next();
+        }return studentId;
     }
     public static Student checkStudent(int id){
         for(Student student:studentDetails){
@@ -176,13 +179,15 @@ public class JavaApplication {
             System.out.println("Invalid Phone Number! please enter again");
             studentPhone = sc.next();
         }
-        System.out.print("Enter student room no:");
-        String studentRoom = sc.next();
-        while (!checkRoomNo(studentRoom)) {
-            System.out.println("Invalid Room Number! please enter again");
-            studentRoom = sc.next();
-        }
-        int intStudentRoom=Integer.parseInt(studentRoom);
+        System.out.print("Enter DoorNumber : ");
+        sc.nextLine();
+        String doorNumber = sc.nextLine();
+        System.out.print("Enter StreetName : ");
+        String streetName = sc.nextLine();
+        System.out.print("Enter city Name : ");
+        String cityName = sc.nextLine();
+        System.out.print("Enter State Name : ");
+        String stateName = sc.nextLine();
         System.out.print("*********Select HostelName:*********");
         System.out.print("\n"+"press 1:Prince..........."+
                            "\n"+"press 2:Leaders.........."+"\n");
@@ -198,6 +203,13 @@ public class JavaApplication {
             default:
                 throw new HostelNameException("Sorry! you are not allowed in this institute");
         }
+        System.out.print("Enter student room no:");
+        String studentRoom = sc.next();
+        while (!checkRoomNo(studentRoom)) {
+            System.out.print("Invalid Room Number! please enter again");
+            studentRoom = sc.next();
+        }
+        int intStudentRoom=Integer.parseInt(studentRoom);
         System.out.println("\n"+"*********select department*********** "+
                          "\n"+"press 1:CSE.........."+
                          "\n"+"press 2:ECE.........."+
@@ -271,7 +283,8 @@ public class JavaApplication {
             }
         }
         studentId += 1;
-        s1 = new Student(studentId, studentName, studentPhone, intStudentRoom, studentHostel,departmentName,subject,faculty,subjectDetails,payment);
+        Address add=new Address(doorNumber,streetName,cityName,stateName);
+        s1 = new Student(studentId, studentName, studentPhone, intStudentRoom, studentHostel,departmentName,subject,faculty,subjectDetails,payment,add);
         return s1;
     }
     public static void process() {
@@ -333,8 +346,9 @@ public class JavaApplication {
                     System.out.println("NO RECORDS FOUND");
                 } else {
                     System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _");
-                    System.out.println("press 1:for all student details");
-                    System.out.println("press 2:for departmentwise students");
+                    System.out.println("press 1:for particular student record");
+                    System.out.println("press 2:for all student details");
+                    System.out.println("press 3:for departmentwise students");
                     String selection = sc.next();
                     while (!(selection.matches("[1-2]*"))) {
                         System.out.println("OPTION IS INVALID!!!!!type correctly");
@@ -343,7 +357,38 @@ public class JavaApplication {
                     int select = Integer.parseInt(selection);
                     System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _");
                     switch (select) {
+                        case 1:
+                            System.out.print("***Enter Student Id : ");
+                            String studId = checkStudentId(sc.next());
+                            int studentId = Integer.parseInt(studId);
+                            Student student = checkStudent(studentId);
+                            if(student!=null) {
+                                System.out.println("press 1 : for academic details");
+                                System.out.println("press 2 : for student personal details");
+                                String selector = checkStudentId(sc.next());
+                                int selectOption = Integer.parseInt(selector);
+                                switch (selectOption) {
+                                    case 1:
+                                        System.out.println(student);
+                                        break;
+                                    case 2:
+                                        System.out.println(student.add);
+                                        break;
+                                    default:
+                                        System.out.println("Invalid Input");
+                                }
+                            }else{
+                                System.out.println("Student ID not found");
+                            }
+                            break;
+
                         case 2:
+                            for (Student detail : studentDetails) {
+                                System.out.println(detail);
+                                checking = false;
+                            }
+                            break;
+                        case 3:
                             System.out.println("Departments : (cse/ece/mech/it)");
                             System.out.println("Enter the department: ");
                             String dept = sc.next().toLowerCase();
@@ -363,14 +408,8 @@ public class JavaApplication {
                                 checking = true;
                             }
                             break;
-                        case 1:
-                            for (Student detail : studentDetails) {
-                                System.out.println(detail);
-                                checking = false;
-                            }
-                            break;
                         default:
-                            System.out.println("TYPE CORRECTLY");
+                            System.out.println("INVALID SELECTION");
                     }
                 }
             } else if (user.equals("3")) {
@@ -379,18 +418,14 @@ public class JavaApplication {
                 } else {
                     System.out.println("Enter student id for removal:");
                     System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
-                    String remover = sc.next();
-                    while (!(remover.matches("[0-9]*"))) {
-                        System.out.println("Student Id!!!!!!only in number Format,TYPE!!!correctly");
-                        remover = sc.next();
-                    }
+                    String remover = checkStudentId(sc.next());
                     int remove = Integer.parseInt(remover);
                     Student student = checkStudent(remove);
                     if (student != null) {
                         studentDetails.remove(student);
                         System.out.println(remove + " Id record removed succesfully");
                     } else {
-                        System.out.println("Student is not present!!!!!!");
+                        System.out.println("Student not found!!!!!!");
                     }
                 }
             } else if (user.equals("4")) {
@@ -406,11 +441,7 @@ public class JavaApplication {
                         System.out.println("NO RECORDS FOUND");
                     } else {
                         System.out.print("Enter StudentId:");
-                        String id = sc.next();
-                        while(!(id.matches("[0-9]*"))){
-                            System.out.println("Enter Correct studentId");
-                            id=sc.next();
-                        }
+                        String id = checkStudentId(sc.next());
                         studentId=Integer.parseInt(id);
                         Student s= checkStudent(studentId);
                         if(s!=null) {
@@ -487,7 +518,8 @@ public class JavaApplication {
                 }
             } else if (user.equals("7")) {
                 System.out.println("Enter the studentId: ");
-                int academics = sc.nextInt();
+                String academics1 = checkStudentId(sc.next());
+                int academics=Integer.parseInt(academics1);
                 Student s;
                 s = checkStudent(academics);
                 if (s != null) {
@@ -541,10 +573,7 @@ public class JavaApplication {
             else if(user.equals("9")) {
                 System.out.println("******UPDATE MARKS*********");
                 System.out.println("Enter student id : ");
-                String studId = sc.next();
-                while (!(studId.matches("[0-9]*"))) {
-                    System.out.println("Enter student id correctly");
-                }
+                String studId = checkStudentId(sc.next());
                 int studentId = Integer.parseInt(studId);
                 Student s = checkStudent(studentId);
                 if (s != null) {
@@ -570,10 +599,7 @@ public class JavaApplication {
             }
             else if(user.equals("10")){
                 System.out.print("***Enter Student Id : ");
-                String studId = sc.next();
-                while (!(studId.matches("[0-9]*"))) {
-                    System.out.println("Enter student id correctly");
-                }
+                String studId = checkStudentId(sc.next());
                 int studentId = Integer.parseInt(studId);
                 Student s = checkStudent(studentId);
                 if(s!=null){
@@ -589,10 +615,7 @@ public class JavaApplication {
             }
             else if(user.equals("11")){
                 System.out.print("***Enter Student Id : ");
-                String studId = sc.next();
-                while (!(studId.matches("[0-9]*"))) {
-                    System.out.println("Enter student id correctly");
-                }
+                String studId = checkStudentId(sc.next());
                 int studentId = Integer.parseInt(studId);
                 Student s = checkStudent(studentId);
                 if(s!=null) {

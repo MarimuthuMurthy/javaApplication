@@ -48,8 +48,9 @@ class Student
     public String hostelName;
     public String department;
     public  SubjectDetails[] subjectDetails;
+    public Address add;
     public int academicFee;
-    Student(int studentId,String studentName,String phoneNo,int roomNo,String hostelName,String department,String[] subject,String[] faculty,SubjectDetails[] subjectDetails,int academicFee){
+    Student(int studentId,String studentName,String phoneNo,int roomNo,String hostelName,String department,String[] subject,String[] faculty,SubjectDetails[] subjectDetails,int academicFee,Address add){
         this.studentId=studentId;
         this.studentName=studentName;
         this.phoneNo=phoneNo;
@@ -58,6 +59,7 @@ class Student
         this.department=department;
         this.subjectDetails =subjectDetails;
         this.academicFee=academicFee;
+        this.add=add;
     }
     public void ScoreCard()
     {
@@ -80,3 +82,25 @@ class Student
                 " \n"+"*********************************";
     }
 }
+class Address{
+    String doorNo;
+    String street;
+    String city;
+    String state;
+    Address(String doorNo,String street,String city,String state){
+        this.doorNo=doorNo;
+        this.state=state;
+        this.street=street;
+        this.city=city;
+    }
+    public String toString(){
+        return  "*******ADDRESS*******"+
+                "\n"+"Door number : "+doorNo+
+                "\n"+"street Name : "+street+
+                "\n"+"city Name   : "+city+
+                "\n"+"state       : "+state;
+    }
+}
+
+
+
