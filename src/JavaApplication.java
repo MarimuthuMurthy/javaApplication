@@ -222,7 +222,23 @@ public class JavaApplication {
         else{
             System.out.println("*******There is no Fees due******");
         }
-
+    }
+    public static void checkDueStudentRecord(){
+        int feeMembers=0;
+        if(studentDetails.isEmpty()){
+            System.out.println("*******student records are not found*****");
+        }else {
+            for (Student student : studentDetails) {
+                if (checkDueFee(student) != 0) {
+                    System.out.println(student);
+                    feeMembers++;
+                    System.out.println("Fees Due : "+checkDueFee(student));
+                    System.out.println("*********************************");
+                }
+            }if(feeMembers==0){
+                System.out.println("*****All students are paid*****");
+            }
+        }
     }
     public static boolean checkName(String name){
         if(name.matches("[A-Za-z.\\s]*")){return true;}
@@ -257,7 +273,8 @@ public class JavaApplication {
                     "\n***** 9. UPDATE SCORE"+
                     "\n***** 10. CHECK FEES DUE"+
                     "\n***** 11. ACADEMICS FEES PAYMENT"+
-                    "\n***** 12. END THE PROCESS: ***** ");
+                    "\n***** 12. STUDENTS DUE LIST"+
+                    "\n***** 13. END THE PROCESS: ***** ");
             System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
             String user = sc.next().toLowerCase();
             if (!(user.matches("[0-9]+"))) {
@@ -569,7 +586,10 @@ public class JavaApplication {
                     System.out.println("******Student Id Not Found*****");
                 }
             }
-            else if(user.equals("12"))
+            else if(user.equals("12")){
+                checkDueStudentRecord();
+            }
+            else if(user.equals("13"))
             {
                 end=false;
                 System.out.println("*****************************");

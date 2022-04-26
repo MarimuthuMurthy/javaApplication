@@ -76,6 +76,7 @@ class Student
                 " \n"+"Student RoomNo :"+roomNo+" "+
                 " \n"+"Student Hostel :"+hostelName+
                 " \n"+"Student Department :"+department+
+                " \n"+"Student paid fees :"+academicFee+
                 " \n"+"*********************************";
     }
 }
