@@ -1,8 +1,7 @@
 
-import javax.security.auth.Subject;
 import java.util.*;
-class HostelNameException extends RuntimeException{
-    HostelNameException(String hostel)
+class StudentException extends RuntimeException{
+    StudentException(String hostel)
     {
         super(hostel);
     }
@@ -145,13 +144,13 @@ public class JavaApplication {
         return name.matches("[A-Za-z.\\s]*");
     }
     public static boolean checkPhoneNumber(String phoneNo){
-        return phoneNo.matches("[0-9]{10}");
+        return phoneNo.matches("\\d{10}");
     }
     public static boolean checkRoomNo(String roomNo){
-        return roomNo.matches("[0-9]{1,9}");
+        return roomNo.matches("\\d{1,9}");
     }
     public static  String checkStudentId(String studentId){
-        while(!(studentId.matches("[0-9]+"))){
+        while(!(studentId.matches("\\d+"))){
             System.out.print("StudentId is Invalid , Re enter studentId : ");
             studentId=sc.next();
         }return studentId;
@@ -173,12 +172,13 @@ public class JavaApplication {
             System.out.println("Invalid name! please enter again");
             studentName = sc.nextLine();
         }
-        System.out.print("Enter student phone number:");
+        System.out.print("Enter student phone number: +91");
         String studentPhone = sc.next();
         while (!checkPhoneNumber(studentPhone)) {
             System.out.println("Invalid Phone Number! please enter again");
             studentPhone = sc.next();
         }
+        System.out.println("***********ADDRESS DETAILS**************");
         System.out.print("Enter DoorNumber : ");
         sc.nextLine();
         String doorNumber = sc.nextLine();
@@ -201,7 +201,7 @@ public class JavaApplication {
                 studentHostel="leaders";
                 break;
             default:
-                throw new HostelNameException("Sorry! you are not allowed in this institute");
+                throw new StudentException("Sorry! you are not allowed in this institute");
         }
         System.out.print("Enter student room no:");
         String studentRoom = sc.next();
@@ -231,7 +231,7 @@ public class JavaApplication {
                 departmentName="it";
                 break;
             default:
-                throw new HostelNameException("sorry!!!other departments students are allowed");
+                throw new StudentException("sorry!!!other departments students are allowed");
         }
         String[] subject=null;
         String[] faculty=null;
@@ -272,15 +272,15 @@ public class JavaApplication {
         System.out.println("*****Your Academic Fees is "+academicFee+" pay atleast 10000 rupees for initial transaction*****");
         int payment = sc.nextInt();
         while(payment<10000 || payment>academicFee){
-            if(payment<10000) {
+            if(payment<10000)
+            {
                 System.out.println("Sorry!!!you have atleast 10000 rupees");
-                System.out.print("Enter amount again: ");
-                payment = sc.nextInt();
-            }else {
+            }else
+            {
                 System.out.println("Sorry!!!you pay more than academic fee");
-                System.out.print("Enter amount again: ");
-                payment = sc.nextInt();
             }
+            System.out.print("Enter amount again: ");
+            payment = sc.nextInt();
         }
         studentId += 1;
         Address add=new Address(doorNumber,streetName,cityName,stateName);
@@ -337,7 +337,7 @@ public class JavaApplication {
                             System.out.println("_ _ _ _ _ __ _ _ _ _ __ _ _ _ _ __");
                         }
                     }
-                } catch (HostelNameException e) {
+                } catch (StudentException e) {
                     System.out.println(e.getMessage());
                 }
 
@@ -668,7 +668,6 @@ public class JavaApplication {
     }
     public static void main(String[] args)
     {
-        Scanner sc=new Scanner(System.in);
         System.out.println("******Admin Access******");
         if(check()==1)
         {
