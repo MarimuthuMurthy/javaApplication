@@ -57,6 +57,109 @@ public class JavaApplication {
     static boolean end=true;
 
     static List<Student> studentDetails=new ArrayList<>();
+    public static int checkDueFee(Student s){
+        switch (s.department) {
+            case "cse":
+                if (CseDepartment.fees == s.academicFee) {
+                    return 0;
+                } else if (s.academicFee < CseDepartment.fees) {
+                    return CseDepartment.fees - s.academicFee;
+                }
+                break;
+            case "ece":
+                if (EceDepartment.fees == s.academicFee) {
+                    return 0;
+                } else if (s.academicFee < EceDepartment.fees) {
+                    return EceDepartment.fees - s.academicFee;
+                }
+                break;
+            case "mech":
+                if (MechanicalDepartment.fees == s.academicFee) {
+                    return 0;
+                } else if (s.academicFee < MechanicalDepartment.fees) {
+                    return MechanicalDepartment.fees - s.academicFee;
+                }
+                break;
+            case "it":
+                if (ItDepartment.fees == s.academicFee) {
+                    return 0;
+                } else if (s.academicFee < ItDepartment.fees) {
+                    return ItDepartment.fees - s.academicFee;
+                }
+                break;
+        }
+        return 0;
+    }
+    public static void payAcademicFee(Student s)
+    {
+        int remainingBalance=checkDueFee(s);
+        if(remainingBalance!=0)
+        {
+            System.out.println("******Your Fees due is " + remainingBalance);
+            System.out.println("Enter amount : ");
+            int amount = sc.nextInt();
+            while(amount>remainingBalance) {
+                System.out.println("you pay more than due!!!please correct amount......");
+                amount= sc.nextInt();
+            }
+            s.academicFee=s.academicFee+amount;
+            System.out.println("****Payment Successful****");
+        }
+        else{
+            System.out.println("*******There is no Fees due******");
+        }
+    }
+    public static void checkDueStudentRecord(){
+        int feeMembers=0;
+        if(studentDetails.isEmpty()){
+            System.out.println("*******student records are not found*****");
+        }else {
+            for (Student student : studentDetails) {
+                if (checkDueFee(student) != 0) {
+                    System.out.println(student);
+                    feeMembers++;
+                    System.out.println("Fees Due : "+checkDueFee(student));
+                    System.out.println("*********************************");
+                }
+            }if(feeMembers==0){
+                System.out.println("*****All students are paid*****");
+            }
+        }
+    }
+    public static void checkNoDueStudentRecord(){
+        int feeMembers=0;
+        if(studentDetails.isEmpty()){
+            System.out.println("*******student records are not found*****");
+        }else {
+            for (Student student : studentDetails) {
+                if (checkDueFee(student) == 0) {
+                    System.out.println(student);
+                    feeMembers++;
+                }
+            }if(feeMembers==0){
+                System.out.println("*****All students have due fees*****");
+            }
+        }
+    }
+    public static boolean checkName(String name){
+        if(name.matches("[A-Za-z.\\s]*")){return true;}
+        else{return false;}
+    }
+    public static boolean checkPhoneNumber(String phoneNo){
+        if(phoneNo.matches("[0-9]{10}")){return true;}
+        else{return false;}
+    }
+    public static boolean checkRoomNo(String roomNo){
+        if(roomNo.matches("[0-9]{1,9}")){return true;}
+        else{return false;}
+    }
+    public static Student checkStudent(int id){
+        for(Student student:studentDetails){
+            if(student.studentId==id){
+                return student;
+            }
+        }return null;
+    }
     public static Student getDetails()
     {
         Scanner sc=new Scanner(System.in);
@@ -171,94 +274,6 @@ public class JavaApplication {
         s1 = new Student(studentId, studentName, studentPhone, intStudentRoom, studentHostel,departmentName,subject,faculty,subjectDetails,payment);
         return s1;
     }
-    public static int checkDueFee(Student s){
-        switch (s.department) {
-            case "cse":
-                if (CseDepartment.fees == s.academicFee) {
-                    return 0;
-                } else if (s.academicFee < CseDepartment.fees) {
-                    return CseDepartment.fees - s.academicFee;
-                }
-                break;
-            case "ece":
-                if (EceDepartment.fees == s.academicFee) {
-                    return 0;
-                } else if (s.academicFee < EceDepartment.fees) {
-                    return EceDepartment.fees - s.academicFee;
-                }
-                break;
-            case "mech":
-                if (MechanicalDepartment.fees == s.academicFee) {
-                    return 0;
-                } else if (s.academicFee < MechanicalDepartment.fees) {
-                    return MechanicalDepartment.fees - s.academicFee;
-                }
-                break;
-            case "it":
-                if (ItDepartment.fees == s.academicFee) {
-                    return 0;
-                } else if (s.academicFee < ItDepartment.fees) {
-                    return ItDepartment.fees - s.academicFee;
-                }
-                break;
-        }
-        return 0;
-    }
-    public static void payAcademicFee(Student s)
-    {
-        int remainingBalance=checkDueFee(s);
-        if(remainingBalance!=0)
-        {
-            System.out.println("******Your Fees due is " + remainingBalance);
-            System.out.println("Enter amount : ");
-            int amount = sc.nextInt();
-            while(amount>remainingBalance) {
-                System.out.println("you pay more than due!!!please correct amount......");
-                amount= sc.nextInt();
-            }
-            s.academicFee=s.academicFee+amount;
-            System.out.println("****Payment Successful****");
-        }
-        else{
-            System.out.println("*******There is no Fees due******");
-        }
-    }
-    public static void checkDueStudentRecord(){
-        int feeMembers=0;
-        if(studentDetails.isEmpty()){
-            System.out.println("*******student records are not found*****");
-        }else {
-            for (Student student : studentDetails) {
-                if (checkDueFee(student) != 0) {
-                    System.out.println(student);
-                    feeMembers++;
-                    System.out.println("Fees Due : "+checkDueFee(student));
-                    System.out.println("*********************************");
-                }
-            }if(feeMembers==0){
-                System.out.println("*****All students are paid*****");
-            }
-        }
-    }
-    public static boolean checkName(String name){
-        if(name.matches("[A-Za-z.\\s]*")){return true;}
-        else{return false;}
-    }
-    public static boolean checkPhoneNumber(String phoneNo){
-        if(phoneNo.matches("[0-9]{10}")){return true;}
-        else{return false;}
-    }
-    public static boolean checkRoomNo(String roomNo){
-        if(roomNo.matches("[0-9]{1,9}")){return true;}
-        else{return false;}
-    }
-    public static Student checkStudent(int id){
-        for(Student student:studentDetails){
-            if(student.studentId==id){
-                return student;
-            }
-        }return null;
-    }
     public static void process() {
         Scanner sc = new Scanner(System.in);
         while (end) {
@@ -273,7 +288,7 @@ public class JavaApplication {
                     "\n***** 9. UPDATE SCORE"+
                     "\n***** 10. CHECK FEES DUE"+
                     "\n***** 11. ACADEMICS FEES PAYMENT"+
-                    "\n***** 12. STUDENTS DUE LIST"+
+                    "\n***** 12. STUDENTS PAYMENT LIST"+
                     "\n***** 13. END THE PROCESS: ***** ");
             System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
             String user = sc.next().toLowerCase();
@@ -293,7 +308,7 @@ public class JavaApplication {
                         count++;
                     } else if (count >= 1) {
                         for (Student detail : studentDetails) {
-                            if (s2.phoneNo.equals(detail.phoneNo)) {
+                            if (s2.phoneNo.equals(detail.phoneNo) ) {
                                 bount++;
                                 studentId -= 1;
                                 System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _");
@@ -587,7 +602,18 @@ public class JavaApplication {
                 }
             }
             else if(user.equals("12")){
-                checkDueStudentRecord();
+                System.out.println("Type 1.....for student records who have due ");
+                System.out.println("Type 2.....for student records who have no due ");
+                int select = sc.nextInt();
+                switch (select){
+                    case 1:checkDueStudentRecord();
+                    break;
+                    case 2:checkNoDueStudentRecord();
+                    break;
+                    default:
+                        System.out.println("Invalid Input.......");
+                }
+
             }
             else if(user.equals("13"))
             {
