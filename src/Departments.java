@@ -20,22 +20,22 @@ class SubjectDetails{
     }
 }
 class CseDepartment{
-    static int fees=2000000;
+    static int fees=200000;
     static String[] cseSubjects={"JAVA","HTML","DATASTRUCTURES","PYTHON","C"};
     static String[] cseFaculty={"cseFaculty1","cseFaculty2","cseFaculty3","cseFaculty4","cseFaculty5"};
 }
 class EceDepartment{
-    static int fees=1500000;
+    static int fees=150000;
     static String[] eceSubjects={"ANALOG","SYSTEM","COMMUNICATION","WIRELESS","NETWORKS"};
     static String[] ecefaculty={"eceFaculty1","eceFcaulty2","eceFaculty3","eceFaculty4","eceFaculty5"};
 }
 class MechanicalDepartment{
-    static int fees=1250000;
+    static int fees=125000;
     static String[] mechanicalSubjects={"THERMODYNAMICS","MACHINEDESIGN","FLUIDMECHANICS","SOLIDMECHANICS","THEORYOFMACHINES"};
     static String[] mechfaculty={"mechFaculty1","mechfaculty2","mechfaculty3","mechFaculty4","mechFaculty5"};
 }
 class ItDepartment{
-    static int fees=1200000;
+    static int fees=120000;
     static String[] itSubjects={"SYSTEMSOFTWARE","INTERNETPROGRAMMING","OPERATINGSYSTEM","OBJECTORIENTEDPROGRAMMING","DATAWAREHOUSING"};
     static String[] itfaculty={"itFcaulty1","itfcaulty2","itfaculty3","itFaculty4","itFaculty5"};
 }
@@ -49,8 +49,8 @@ class Student
     public String department;
     public  SubjectDetails[] subjectDetails;
     public Address add;
-    public int academicFee;
-    Student(int studentId,String studentName,String phoneNo,int roomNo,String hostelName,String department,String[] subject,String[] faculty,SubjectDetails[] subjectDetails,int academicFee,Address add){
+    public Semester[] semester;
+    Student(int studentId,String studentName,String phoneNo,int roomNo,String hostelName,String department,SubjectDetails[] subjectDetails,Address add,Semester[] semester){
         this.studentId=studentId;
         this.studentName=studentName;
         this.phoneNo=phoneNo;
@@ -58,8 +58,8 @@ class Student
         this.roomNo=roomNo;
         this.department=department;
         this.subjectDetails =subjectDetails;
-        this.academicFee=academicFee;
         this.add=add;
+        this.semester=semester;
     }
     public void ScoreCard()
     {
@@ -78,7 +78,6 @@ class Student
                 " \n"+"Student RoomNo :"+roomNo+" "+
                 " \n"+"Student Hostel :"+hostelName+
                 " \n"+"Student Department :"+department+
-                " \n"+"Student paid fees :"+academicFee+
                 " \n"+"*********************************";
     }
 }
@@ -98,9 +97,25 @@ class Address{
                 "\n"+"Door number : "+doorNo+
                 "\n"+"street Name : "+street+
                 "\n"+"city Name   : "+city+
-                "\n"+"state       : "+state;
+                "\n"+"state       : "+state+
+                "\n"+"********************";
     }
 }
-
-
+class Semester{
+    int semesterNumber;
+    int semesterMarks;
+    double semesterFee;
+    Semester(int semesterNumber,int semesterMarks)
+    {
+        this.semesterNumber=semesterNumber;
+        this.semesterMarks=semesterMarks;
+    }
+    public void setSemesterFee(double semesterFee){
+        this.semesterFee=semesterFee;
+    }
+    public String toString(){
+        return  "_____________________________________________"+
+                "\n"+"Semester number : "+semesterNumber+" semester marks "+semesterMarks;
+    }
+}
 

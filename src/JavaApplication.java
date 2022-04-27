@@ -56,90 +56,7 @@ public class JavaApplication {
     static boolean end=true;
 
     static List<Student> studentDetails=new ArrayList<>();
-    public static int checkDueFee(Student s){
-        switch (s.department) {
-            case "cse":
-                if (CseDepartment.fees == s.academicFee) {
-                    return 0;
-                } else if (s.academicFee < CseDepartment.fees) {
-                    return CseDepartment.fees - s.academicFee;
-                }
-                break;
-            case "ece":
-                if (EceDepartment.fees == s.academicFee) {
-                    return 0;
-                } else if (s.academicFee < EceDepartment.fees) {
-                    return EceDepartment.fees - s.academicFee;
-                }
-                break;
-            case "mech":
-                if (MechanicalDepartment.fees == s.academicFee) {
-                    return 0;
-                } else if (s.academicFee < MechanicalDepartment.fees) {
-                    return MechanicalDepartment.fees - s.academicFee;
-                }
-                break;
-            case "it":
-                if (ItDepartment.fees == s.academicFee) {
-                    return 0;
-                } else if (s.academicFee < ItDepartment.fees) {
-                    return ItDepartment.fees - s.academicFee;
-                }
-                break;
-        }
-        return 0;
-    }
-    public static void payAcademicFee(Student s)
-    {
-        int remainingBalance=checkDueFee(s);
-        if(remainingBalance!=0)
-        {
-            System.out.println("******Your Fees due is " + remainingBalance);
-            System.out.println("Enter amount : ");
-            int amount = sc.nextInt();
-            while(amount>remainingBalance) {
-                System.out.println("you pay more than due!!!please correct amount......");
-                amount= sc.nextInt();
-            }
-            s.academicFee=s.academicFee+amount;
-            System.out.println("****Payment Successful****");
-        }
-        else{
-            System.out.println("*******There is no Fees due******");
-        }
-    }
-    public static void checkDueStudentRecord(){
-        int feeMembers=0;
-        if(studentDetails.isEmpty()){
-            System.out.println("*******student records are not found*****");
-        }else {
-            for (Student student : studentDetails) {
-                if (checkDueFee(student) != 0) {
-                    System.out.println(student);
-                    feeMembers++;
-                    System.out.println("Fees Due : "+checkDueFee(student));
-                    System.out.println("*********************************");
-                }
-            }if(feeMembers==0){
-                System.out.println("*****All students are paid*****");
-            }
-        }
-    }
-    public static void checkNoDueStudentRecord(){
-        int feeMembers=0;
-        if(studentDetails.isEmpty()){
-            System.out.println("*******student records are not found*****");
-        }else {
-            for (Student student : studentDetails) {
-                if (checkDueFee(student) == 0) {
-                    System.out.println(student);
-                    feeMembers++;
-                }
-            }if(feeMembers==0){
-                System.out.println("*****All students have due fees*****");
-            }
-        }
-    }
+
     public static boolean checkName(String name){
         return name.matches("[A-Za-z.\\s]*");
     }
@@ -148,6 +65,25 @@ public class JavaApplication {
     }
     public static boolean checkRoomNo(String roomNo){
         return roomNo.matches("\\d{1,9}");
+    }
+    public static void updateSemesterMarks(Student s){
+        System.out.println("*****Enter present Semester : ");
+        System.out.println("press 1 : 1st semester"+"\n"+"press 2 : 2nd semester"+"\n"+"press 3 : 3rd semester"+"\n"+"press 4 : 4th semester"+"\n"+"press 5 : 5th semester"+"\n"+"press 6 : 6th semester"+"\n"+"press 7 : 7th semester"+"\n"+"press 8 : 8th semester");
+        int select = sc.nextInt()-1;
+        while(select>8 || select<0){
+            System.out.println("please select correct semester");
+            select=sc.nextInt()-1;
+        }
+        if(s.semester[select].semesterMarks!=-1){
+            System.out.println("Sorry!!!! Your SEMESTER "+(select+1)+" marks already entered ");
+        }else {
+            for (int i = 0; i < select; i++) {
+                if (s.semester[i].semesterMarks == -1) {
+                    System.out.println("Enter " + (i + 1) + " semester marks :");
+                    s.semester[i].semesterMarks = sc.nextInt();
+                }
+            }
+        }
     }
     public static  String checkStudentId(String studentId){
         while(!(studentId.matches("\\d+"))){
@@ -161,6 +97,23 @@ public class JavaApplication {
                 return student;
             }
         }return null;
+    }
+    public static void findStudentUnderFaculty(String Faculty){
+        if(studentDetails.isEmpty()){
+            System.out.println("**STUDENTS RECORDS NOT FOUND**");
+        }else {
+            int countStudents=0;
+            for (Student student : studentDetails) {
+                for (int i = 0; i < student.subjectDetails.length; i++) {
+                    if (student.subjectDetails[i].subjectFaculty.equals(Faculty)) {
+                        System.out.println(student);
+                        countStudents++;
+                    }
+                }
+            }if(countStudents==0){
+                System.out.println("***FACULTY DOESNT ALLOCATE STUDENTS***");
+            }
+        }
     }
     public static Student getDetails()
     {
@@ -210,7 +163,7 @@ public class JavaApplication {
             studentRoom = sc.next();
         }
         int intStudentRoom=Integer.parseInt(studentRoom);
-        System.out.println("\n"+"*********select department*********** "+
+        System.out.println("*********select department*********** "+
                          "\n"+"press 1:CSE.........."+
                          "\n"+"press 2:ECE.........."+
                          "\n"+"press 3:MECH........."+
@@ -236,6 +189,7 @@ public class JavaApplication {
         String[] subject=null;
         String[] faculty=null;
         SubjectDetails[] subjectDetails=new SubjectDetails[5];
+        Semester[] semester = new Semester[8];
         int academicFee=0;
         if(departmentName.equals("cse")){
             subject=CseDepartment.cseSubjects;
@@ -269,43 +223,175 @@ public class JavaApplication {
                 subjectDetails[i]=new SubjectDetails(subject[i],faculty[i],-1);
             }
         }
-        System.out.println("*****Your Academic Fees is "+academicFee+" pay atleast 10000 rupees for initial transaction*****");
-        int payment = sc.nextInt();
-        while(payment<10000 || payment>academicFee){
-            if(payment<10000)
-            {
-                System.out.println("Sorry!!!you have atleast 10000 rupees");
-            }else
-            {
-                System.out.println("Sorry!!!you pay more than academic fee");
+        System.out.println("select current study year");
+        System.out.println("1.1st year"+"\n"+"2.2nd year"+"\n"+"3.3rd year"+"\n"+"4th year");
+        boolean end1=true;
+        while(end1) {
+            int select = sc.nextInt();
+            switch (select) {
+                case 1:
+                    System.out.println("press 1: 1st semester");
+                    System.out.println("press 2: 2nd semester");
+                    System.out.println("select current semester");
+                    int selectSem = sc.nextInt();
+                    boolean end2= true;
+                    while(end2) {
+                        switch (selectSem) {
+                            case 1:
+                                for (int i = 0; i < 8; i++) {
+                                    semester[i] = new Semester(i + 1, -1);
+                                }
+                                end2=false;
+                                break;
+                            case 2:
+                                System.out.println("please enter 1 semester marks ");
+                                int marks = sc.nextInt();
+                                semester[0] = new Semester(1, marks);
+                                for (int i = 1; i < 8; i++) {
+                                    semester[i] = new Semester(i + 1, -1);
+                                }
+                                end2=false;
+                                break;
+                            default:
+                                System.out.println("****Select Valid Semester****");
+                        }
+                    }
+                    end1=false;
+                    break;
+                case 2:
+                    System.out.println("press 1 : 3rd semester");
+                    System.out.println("press 2 : 4th semester");
+                    System.out.println("select current semester");
+                    boolean end3=true;
+                    while(end3) {
+                        int selectSem1 = sc.nextInt();
+                        switch (selectSem1) {
+                            case 1:
+                                for (int i = 0; i < 2; i++) {
+                                    System.out.println("please enter " + (i + 1) + " semester marks ");
+                                    int marks = sc.nextInt();
+                                    semester[i] = new Semester(i + 1, marks);
+                                }
+                                for (int i = 2; i < 8; i++) {
+                                    semester[i] = new Semester(i + 1, -1);
+                                }
+                                end3=false;
+                                break;
+                            case 2:
+                                for (int i = 0; i < 3; i++) {
+                                    System.out.println("please enter " + (i + 1) + " semester marks ");
+                                    int marks = sc.nextInt();
+                                    semester[i] = new Semester(i + 1, marks);
+                                }
+                                for (int i = 3; i < 8; i++) {
+                                    semester[i] = new Semester(i + 1, -1);
+                                }
+                                end3=false;
+                                break;
+                            default:
+                                System.out.println("*******INVALID SEMESTER******");
+                        }
+                    }
+                    end1=false;
+                    break;
+                case 3:
+                    System.out.println("press 1 : 5rd semester");
+                    System.out.println("press 2 : 6th semester");
+                    System.out.println("select current semester");
+                    boolean end4=true;
+                    while (end4) {
+                        int selectSem2 = sc.nextInt();
+                        switch (selectSem2) {
+                            case 1:
+                                for (int i = 0; i < 4; i++) {
+                                    System.out.println("please enter " + (i + 1) + " semester marks ");
+                                    int marks = sc.nextInt();
+                                    semester[i] = new Semester(i + 1, marks);
+                                }
+                                semester[4] = new Semester(5, -1);
+                                semester[5] = new Semester(6, -1);
+                                semester[6] = new Semester(7, -1);
+                                semester[7] = new Semester(8, -1);
+                                end4=false;
+                                break;
+                            case 2:
+                                for (int i = 0; i < 5; i++) {
+                                    System.out.println("please enter " + (i + 1) + " semester marks ");
+                                    int marks = sc.nextInt();
+                                    semester[i] = new Semester(i + 1, marks);
+                                }
+                                semester[5] = new Semester(6, -1);
+                                semester[6] = new Semester(7, -1);
+                                semester[7] = new Semester(8, -1);
+                                end4=false;
+                                break;
+                            default:
+                                System.out.println("*****INVALID SEMESTER*****");
+                        }
+                    }
+                    end1=false;
+                    break;
+                case 4:
+                    System.out.println("press 1 : 7rd semester");
+                    System.out.println("press 2 : 8th semester");
+                    System.out.println("select current semester");
+                    boolean end5=true;
+                    while(end5) {
+                        int selectSem3 = sc.nextInt();
+                        switch (selectSem3) {
+                            case 1:
+                                for (int i = 0; i < 6; i++) {
+                                    System.out.println("please enter " + (i + 1) + " semester marks ");
+                                    int marks = sc.nextInt();
+                                    semester[i] = new Semester(i + 1, marks);
+                                }
+                                semester[6] = new Semester(7, -1);
+                                semester[7] = new Semester(8, -1);
+                                end5=false;
+                                break;
+                            case 2:
+                                for (int i = 0; i < 7; i++) {
+                                    System.out.println("please enter " + (i + 1) + " semester marks ");
+                                    int marks = sc.nextInt();
+                                    semester[i] = new Semester(i + 1, marks);
+                                }
+                                semester[7] = new Semester(8, -1);
+                                end5=false;
+                                break;
+                            default:
+                                System.out.println("****INVLAID SEMESTER****");
+                        }
+                    }
+                    end1=false;
+                    break;
+                default:
+                    System.out.println("*****Invalid semester*****");
             }
-            System.out.print("Enter amount again: ");
-            payment = sc.nextInt();
         }
         studentId += 1;
         Address add=new Address(doorNumber,streetName,cityName,stateName);
-        s1 = new Student(studentId, studentName, studentPhone, intStudentRoom, studentHostel,departmentName,subject,faculty,subjectDetails,payment,add);
+        s1 = new Student(studentId, studentName, studentPhone, intStudentRoom, studentHostel,departmentName,subjectDetails,add,semester);
         return s1;
     }
     public static void process() {
         Scanner sc = new Scanner(System.in);
         while (end) {
-            System.out.println("\n***** 1. ADD STUDENT DETAILS: *****" +
-                    "\n***** 2. SEE STUDENT DETAILS: *****" +
-                    "\n***** 3. REMOVE STUDENT DETAILS: *****" +
-                    "\n***** 4. UPDATE DETAILS: *****" +
-                    "\n***** 5. ADD MARKS OF STUDNET: *****" +
-                    "\n***** 6. SEARCH RECORD: *****" +
-                    "\n***** 7. SHOW THE MARKS OF STUDENT: *****" +
-                    "\n***** 8. SHOW THE STUDENT SUBJECT AND FACULTY: *****" +
-                    "\n***** 9. UPDATE SCORE"+
-                    "\n***** 10. CHECK FEES DUE"+
-                    "\n***** 11. ACADEMICS FEES PAYMENT"+
-                    "\n***** 12. STUDENTS PAYMENT LIST"+
-                    "\n***** 13. END THE PROCESS: ***** ");
+            System.out.println("type 1 )-> ADD STUDENT DETAILS: " +
+                    "\ntype 2 )-> SEE STUDENT DETAILS: " +
+                    "\ntype 3 )-> REMOVE STUDENT DETAILS: " +
+                    "\ntype 4 )-> UPDATE DETAILS: " +
+                    "\ntype 5 )-> ADD MARKS OF STUDNET: " +
+                    "\ntype 6 )-> SEARCH RECORD: " +
+                    "\ntype 7 )-> SHOW THE MARKS OF STUDENT: " +
+                    "\ntype 8 )-> SHOW THE STUDENT SUBJECT AND FACULTY: " +
+                    "\ntype 9 )-> UPDATE SCORE: "+
+                    "\ntype 10 )-> FIND STUDENT UNDER THE GUIDENCE OF FACULTY"+
+                    "\ntype 11 )-> SHOW SEMESTER MARKS : "+
+                    "\ntype 12 )-> UPDATE SEMESTER MARKS : "+
+                    "\ntype 13 )-> END : ");
             System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
             String user = sc.next().toLowerCase();
-            if (!(user.matches("[0-9]+"))) {
+            if (!(user.matches("\\d+"))) {
                 System.out.println("Input is invalid!please Try again");
             } else if (user.equals("1")) {
                 Student s2;
@@ -316,7 +402,8 @@ public class JavaApplication {
                     {
                         studentDetails.add(s2);
                         System.out.println("_ _ _ _ _ __ _ _ _ _ __ _ _ _ _ __");
-                        System.out.println("STUDENT RECORD ADDED SUCCESFULLY");
+                        System.out.println("**** Student id added Successfully ******");
+                        System.out.println("**** Use the below Services ****");
                         System.out.println("_ _ _ _ _ __ _ _ _ _ __ _ _ _ _ __");
                         count++;
                     } else if (count >= 1) {
@@ -326,6 +413,7 @@ public class JavaApplication {
                                 studentId -= 1;
                                 System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _");
                                 System.out.println("Student id already existed");
+                                System.out.println("**** duplicant records not accepted ****");
                                 System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _");
                                 break;
                             }
@@ -333,7 +421,8 @@ public class JavaApplication {
                         if (bount == 0) {
                             studentDetails.add(s2);
                             System.out.println("_ _ _ _ _ __ _ _ _ _ __ _ _ _ _ __");
-                            System.out.println("STUDENT RECORD ADDED SUCCESFULLY");
+                            System.out.println("****Student id added Successfully****");
+                            System.out.println("**** Use the below Services ****");
                             System.out.println("_ _ _ _ _ __ _ _ _ _ __ _ _ _ _ __");
                         }
                     }
@@ -598,45 +687,37 @@ public class JavaApplication {
                 }
             }
             else if(user.equals("10")){
-                System.out.print("***Enter Student Id : ");
-                String studId = checkStudentId(sc.next());
-                int studentId = Integer.parseInt(studId);
-                Student s = checkStudent(studentId);
-                if(s!=null){
-                int dueAmount=checkDueFee(s);
-                if(dueAmount==0){
-                    System.out.println("*******There is no Fees due******");
-                }
-                else{
-                    System.out.println("******Your Fees due is "+dueAmount+" *********");
-                }}else{
-                    System.out.println("*********Student Id not found********");
-                }
+                System.out.println("Enter Faculty Name : ");
+                String faculty=sc.next();
+                findStudentUnderFaculty(faculty);
             }
             else if(user.equals("11")){
-                System.out.print("***Enter Student Id : ");
-                String studId = checkStudentId(sc.next());
-                int studentId = Integer.parseInt(studId);
-                Student s = checkStudent(studentId);
-                if(s!=null) {
-                    payAcademicFee(s);
-                }else{
-                    System.out.println("******Student Id Not Found*****");
-                }
+                System.out.println("Enter student Id");
+                String studentId=checkStudentId(sc.next());
+                int studId=Integer.parseInt(studentId);
+                Student student=checkStudent(studId);
+                if(student!=null){
+                for(int i=0;i<8;i++){
+                    if(student.semester[i].semesterMarks!=-1){
+                        System.out.println(student.semester[i]);
+                    }
+                    else{
+                        System.out.println("present!!!student studing in "+(i+1)+"semester");
+                        break;
+                    }
+                }}
+                else{System.out.println("Student Id not Found");}
             }
             else if(user.equals("12")){
-                System.out.println("Type 1.....for student records who have due ");
-                System.out.println("Type 2.....for student records who have no due ");
-                int select = sc.nextInt();
-                switch (select){
-                    case 1:checkDueStudentRecord();
-                    break;
-                    case 2:checkNoDueStudentRecord();
-                    break;
-                    default:
-                        System.out.println("Invalid Input.......");
+                System.out.println("enter student Id : ");
+                String studentId=checkStudentId(sc.next());
+                int studId=Integer.parseInt(studentId);
+                Student student=checkStudent(studId);
+                if(student!=null) {
+                    updateSemesterMarks(student);
+                }else{
+                    System.out.println("***STUDENT ID NOT FOUND***");
                 }
-
             }
             else if(user.equals("13"))
             {
