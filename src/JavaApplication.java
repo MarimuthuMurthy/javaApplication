@@ -253,7 +253,7 @@ public class JavaApplication {
                                 end2=false;
                                 break;
                             default:
-                                System.out.println("****Select Valid Semester****");
+                                System.out.println("*****Select Valid Semester*****");
                         }
                     }
                     end1=false;
