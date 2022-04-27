@@ -78,24 +78,17 @@ public class JavaApplication {
         if (select == 8) {
             for (int i = 0; i < 8; i++) {
                 if (s.semester[i].semesterMarks == -2) {
-                    System.out.println("Enter semester " + (i + 1) + " marks (note:if you dont clear the arrears enter '-2')");
-                    s.semester[i].semesterMarks = sc.nextInt();
-                }
-            }
-        } else
-        {
+                    System.out.println( (i + 1) + "semester");
+                    s.semester[i].semesterMarks = checkArrear();}}
+        }
+        else {
             if (s.semester[select].semesterMarks != -1 && s.semester[select].semesterMarks != -2) {
                     System.out.println("Sorry!!!! Your SEMESTER " + (select + 1) + " marks already entered ");
                 } else {
                     for (int i = 0; i < select; i++) {
                         if (s.semester[i].semesterMarks == -1 || s.semester[i].semesterMarks == -2) {
                             System.out.println((i + 1) + " semester ");
-                            s.semester[i].semesterMarks = checkArrear();
-                        }
-                    }
-            }
-        }
-    }
+                            s.semester[i].semesterMarks = checkArrear();}}}}}
     public static void semesterMarksShown(Student student){
         for(int i=0;i<8;i++){
             if(student.semester[i].semesterMarks!=-1 && student.semester[i].semesterMarks!=-2){
@@ -402,8 +395,8 @@ public class JavaApplication {
                     break;
                 case 5:
                     for(int i=0;i<8;i++){
-                        System.out.println("please enter " + (i + 1) + " semester marks ");
-                        int marks = sc.nextInt();
+                        System.out.println((i + 1) + " semester  ");
+                        int marks = checkArrear();
                         semester[i] = new Semester(i + 1, marks);
                     }
                     end1=false;
