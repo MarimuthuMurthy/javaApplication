@@ -66,23 +66,58 @@ public class JavaApplication {
     public static boolean checkRoomNo(String roomNo){
         return roomNo.matches("\\d{1,9}");
     }
-    public static void updateSemesterMarks(Student s){
-        System.out.println("*****Enter present Semester : ");
-        System.out.println("press 1 : 1st semester"+"\n"+"press 2 : 2nd semester"+"\n"+"press 3 : 3rd semester"+"\n"+"press 4 : 4th semester"+"\n"+"press 5 : 5th semester"+"\n"+"press 6 : 6th semester"+"\n"+"press 7 : 7th semester"+"\n"+"press 8 : 8th semester");
-        int select = sc.nextInt()-1;
-        while(select>8 || select<0){
+    public static void updateSemesterMarks(Student s) {
+        System.out.println("*****Your semester records  : ");
+        semesterMarksShown(s);
+        System.out.println("press 1 : 1st semester" + "\n" + "press 2 : 2nd semester" + "\n" + "press 3 : 3rd semester" + "\n" + "press 4 : 4th semester" + "\n" + "press 5 : 5th semester" + "\n" + "press 6 : 6th semester" + "\n" + "press 7 : 7th semester" + "\n" + "press 8 : 8th semester" + "\n" + "press 8 : 8th semester");
+        int select = sc.nextInt() - 1;
+        while (select > 8 || select < 0) {
             System.out.println("please select correct semester");
-            select=sc.nextInt()-1;
+            select = sc.nextInt() - 1;
         }
-        if(s.semester[select].semesterMarks!=-1){
-            System.out.println("Sorry!!!! Your SEMESTER "+(select+1)+" marks already entered ");
-        }else {
-            for (int i = 0; i < select; i++) {
-                if (s.semester[i].semesterMarks == -1) {
-                    System.out.println("Enter " + (i + 1) + " semester marks :");
+        if (select == 8) {
+            for (int i = 0; i < 8; i++) {
+                if (s.semester[i].semesterMarks == -2) {
+                    System.out.println("Enter semester " + (i + 1) + " marks (note:if you dont clear the arrears enter '-2')");
                     s.semester[i].semesterMarks = sc.nextInt();
                 }
             }
+        } else
+        {
+            if (s.semester[select].semesterMarks != -1 && s.semester[select].semesterMarks != -2) {
+                    System.out.println("Sorry!!!! Your SEMESTER " + (select + 1) + " marks already entered ");
+                } else {
+                    for (int i = 0; i < select; i++) {
+                        if (s.semester[i].semesterMarks == -1 || s.semester[i].semesterMarks == -2) {
+                            System.out.println((i + 1) + " semester ");
+                            s.semester[i].semesterMarks = checkArrear();
+                        }
+                    }
+            }
+        }
+    }
+    public static void semesterMarksShown(Student student){
+        for(int i=0;i<8;i++){
+            if(student.semester[i].semesterMarks!=-1 && student.semester[i].semesterMarks!=-2){
+                System.out.println("Semester number : "+(i+1)+" semester marks : "+student.semester[i].semesterMarks);
+            }
+            else if(student.semester[i].semesterMarks==-2){
+                System.out.println("semester number "+(i+1)+", marks are not added due to arrears or revvaluation");
+            }
+        }
+    }
+    public static int checkArrear(){
+        System.out.println("press 1 : I have arrears ");
+        System.out.println("press 2 : I dont have arrears ");
+        String select = sc.next();
+        while(!(select.matches("[1-2]"))){
+            System.out.println("Invalid selection, select the options");
+            select=sc.next();
+        }
+        if(select.equals("1")){return -2;}
+        else{
+            System.out.println("Enter the marks");
+            return sc.nextInt();
         }
     }
     public static  String checkStudentId(String studentId){
@@ -224,7 +259,7 @@ public class JavaApplication {
             }
         }
         System.out.println("select current study year");
-        System.out.println("press 1 : 1st year"+"\n"+"press 2 : 2nd year"+"\n"+"press 3 : 3rd year"+"\n"+"press 4 : 4th year");
+        System.out.println("press 1 : 1st year"+"\n"+"press 2 : 2nd year"+"\n"+"press 3 : 3rd year"+"\n"+"press 4 : 4th year"+"\n"+"press 5 : passed out");
         boolean end1=true;
         while(end1) {
             int select = sc.nextInt();
@@ -238,14 +273,15 @@ public class JavaApplication {
                     while(end2) {
                         switch (selectSem) {
                             case 1:
+                                System.out.println("******Enjoy your Engineering life*****");
                                 for (int i = 0; i < 8; i++) {
                                     semester[i] = new Semester(i + 1, -1);
                                 }
                                 end2=false;
                                 break;
                             case 2:
-                                System.out.println("please enter 1 semester marks ");
-                                int marks = sc.nextInt();
+                                System.out.println(" 1 semester marks ");
+                                int marks = checkArrear();
                                 semester[0] = new Semester(1, marks);
                                 for (int i = 1; i < 8; i++) {
                                     semester[i] = new Semester(i + 1, -1);
@@ -268,8 +304,8 @@ public class JavaApplication {
                         switch (selectSem1) {
                             case 1:
                                 for (int i = 0; i < 2; i++) {
-                                    System.out.println("please enter " + (i + 1) + " semester marks ");
-                                    int marks = sc.nextInt();
+                                    System.out.println((i + 1) + " semester ");
+                                    int marks = checkArrear();
                                     semester[i] = new Semester(i + 1, marks);
                                 }
                                 for (int i = 2; i < 8; i++) {
@@ -279,8 +315,8 @@ public class JavaApplication {
                                 break;
                             case 2:
                                 for (int i = 0; i < 3; i++) {
-                                    System.out.println("please enter " + (i + 1) + " semester marks ");
-                                    int marks = sc.nextInt();
+                                    System.out.println((i + 1) + " semester ");
+                                    int marks = checkArrear();
                                     semester[i] = new Semester(i + 1, marks);
                                 }
                                 for (int i = 3; i < 8; i++) {
@@ -304,8 +340,8 @@ public class JavaApplication {
                         switch (selectSem2) {
                             case 1:
                                 for (int i = 0; i < 4; i++) {
-                                    System.out.println("please enter " + (i + 1) + " semester marks ");
-                                    int marks = sc.nextInt();
+                                    System.out.println( (i + 1) + " semester ");
+                                    int marks = checkArrear();
                                     semester[i] = new Semester(i + 1, marks);
                                 }
                                 semester[4] = new Semester(5, -1);
@@ -316,8 +352,8 @@ public class JavaApplication {
                                 break;
                             case 2:
                                 for (int i = 0; i < 5; i++) {
-                                    System.out.println("please enter " + (i + 1) + " semester marks ");
-                                    int marks = sc.nextInt();
+                                    System.out.println((i + 1) + " semester");
+                                    int marks = checkArrear();
                                     semester[i] = new Semester(i + 1, marks);
                                 }
                                 semester[5] = new Semester(6, -1);
@@ -341,7 +377,7 @@ public class JavaApplication {
                         switch (selectSem3) {
                             case 1:
                                 for (int i = 0; i < 6; i++) {
-                                    System.out.println("please enter " + (i + 1) + " semester marks ");
+                                    System.out.println("please enter " + (i + 1) + " semester marks  NOTE:(if you have arrears or waits for revaluation results(enter '-2' marks))");
                                     int marks = sc.nextInt();
                                     semester[i] = new Semester(i + 1, marks);
                                 }
@@ -351,7 +387,7 @@ public class JavaApplication {
                                 break;
                             case 2:
                                 for (int i = 0; i < 7; i++) {
-                                    System.out.println("please enter " + (i + 1) + " semester marks ");
+                                    System.out.println("please enter " + (i + 1) + " semester marks:  NOTE:(if you have arrears or waits for revaluation results(enter '-2' marks))");
                                     int marks = sc.nextInt();
                                     semester[i] = new Semester(i + 1, marks);
                                 }
@@ -361,6 +397,14 @@ public class JavaApplication {
                             default:
                                 System.out.println("****INVLAID SEMESTER****");
                         }
+                    }
+                    end1=false;
+                    break;
+                case 5:
+                    for(int i=0;i<8;i++){
+                        System.out.println("please enter " + (i + 1) + " semester marks ");
+                        int marks = sc.nextInt();
+                        semester[i] = new Semester(i + 1, marks);
                     }
                     end1=false;
                     break;
@@ -697,15 +741,8 @@ public class JavaApplication {
                 int studId=Integer.parseInt(studentId);
                 Student student=checkStudent(studId);
                 if(student!=null){
-                for(int i=0;i<8;i++){
-                    if(student.semester[i].semesterMarks!=-1){
-                        System.out.println(student.semester[i]);
-                    }
-                    else{
-                        System.out.println("present!!!student studing in "+(i+1)+"semester");
-                        break;
-                    }
-                }}
+                semesterMarksShown(student);
+                }
                 else{System.out.println("Student Id not Found");}
             }
             else if(user.equals("12")){
