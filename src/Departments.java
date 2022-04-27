@@ -114,7 +114,7 @@ class Semester{
         this.semesterFee=semesterFee;
     }
     public String toString(){
-        return  "______________________________________________"+
+        return  "_____________________________________________"+
                 "\n"+"Semester number : "+semesterNumber+" semester marks "+semesterMarks;
     }
 }

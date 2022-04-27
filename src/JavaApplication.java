@@ -224,7 +224,7 @@ public class JavaApplication {
             }
         }
         System.out.println("select current study year");
-        System.out.println("1.1st year"+"\n"+"2.2nd year"+"\n"+"3.3rd year"+"\n"+"4th year");
+        System.out.println("press 1 : 1st year"+"\n"+"press 2 : 2nd year"+"\n"+"press 3 : 3rd year"+"\n"+"press 4 : 4th year");
         boolean end1=true;
         while(end1) {
             int select = sc.nextInt();
