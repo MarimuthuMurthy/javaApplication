@@ -105,12 +105,10 @@ class Semester{
     int semesterNumber;
     int semesterMarks;
     double semesterFee;
-    Semester(int semesterNumber,int semesterMarks)
+    Semester(int semesterNumber,int semesterMarks,int semesterFee)
     {
         this.semesterNumber=semesterNumber;
         this.semesterMarks=semesterMarks;
-    }
-    public void setSemesterFee(double semesterFee){
         this.semesterFee=semesterFee;
     }
     public String toString(){

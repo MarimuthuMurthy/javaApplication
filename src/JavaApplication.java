@@ -268,16 +268,16 @@ public class JavaApplication {
                             case 1:
                                 System.out.println("******Enjoy your Engineering life*****");
                                 for (int i = 0; i < 8; i++) {
-                                    semester[i] = new Semester(i + 1, -1);
+                                    semester[i] = new Semester(i + 1, -1,academicFee);
                                 }
                                 end2=false;
                                 break;
                             case 2:
                                 System.out.println(" 1 semester marks ");
                                 int marks = checkArrear();
-                                semester[0] = new Semester(1, marks);
+                                semester[0] = new Semester(1, marks,academicFee);
                                 for (int i = 1; i < 8; i++) {
-                                    semester[i] = new Semester(i + 1, -1);
+                                    semester[i] = new Semester(i + 1, -1,academicFee);
                                 }
                                 end2=false;
                                 break;
@@ -299,10 +299,10 @@ public class JavaApplication {
                                 for (int i = 0; i < 2; i++) {
                                     System.out.println((i + 1) + " semester ");
                                     int marks = checkArrear();
-                                    semester[i] = new Semester(i + 1, marks);
+                                    semester[i] = new Semester(i + 1, marks,academicFee);
                                 }
                                 for (int i = 2; i < 8; i++) {
-                                    semester[i] = new Semester(i + 1, -1);
+                                    semester[i] = new Semester(i + 1, -1,academicFee);
                                 }
                                 end3=false;
                                 break;
@@ -310,10 +310,10 @@ public class JavaApplication {
                                 for (int i = 0; i < 3; i++) {
                                     System.out.println((i + 1) + " semester ");
                                     int marks = checkArrear();
-                                    semester[i] = new Semester(i + 1, marks);
+                                    semester[i] = new Semester(i + 1, marks,academicFee);
                                 }
                                 for (int i = 3; i < 8; i++) {
-                                    semester[i] = new Semester(i + 1, -1);
+                                    semester[i] = new Semester(i + 1, -1,academicFee);
                                 }
                                 end3=false;
                                 break;
@@ -335,23 +335,23 @@ public class JavaApplication {
                                 for (int i = 0; i < 4; i++) {
                                     System.out.println( (i + 1) + " semester ");
                                     int marks = checkArrear();
-                                    semester[i] = new Semester(i + 1, marks);
+                                    semester[i] = new Semester(i + 1, marks,academicFee);
                                 }
-                                semester[4] = new Semester(5, -1);
-                                semester[5] = new Semester(6, -1);
-                                semester[6] = new Semester(7, -1);
-                                semester[7] = new Semester(8, -1);
+                                semester[4] = new Semester(5, -1,academicFee);
+                                semester[5] = new Semester(6, -1,academicFee);
+                                semester[6] = new Semester(7, -1,academicFee);
+                                semester[7] = new Semester(8, -1,academicFee);
                                 end4=false;
                                 break;
                             case 2:
                                 for (int i = 0; i < 5; i++) {
                                     System.out.println((i + 1) + " semester");
                                     int marks = checkArrear();
-                                    semester[i] = new Semester(i + 1, marks);
+                                    semester[i] = new Semester(i + 1, marks,academicFee);
                                 }
-                                semester[5] = new Semester(6, -1);
-                                semester[6] = new Semester(7, -1);
-                                semester[7] = new Semester(8, -1);
+                                semester[5] = new Semester(6, -1,academicFee);
+                                semester[6] = new Semester(7, -1,academicFee);
+                                semester[7] = new Semester(8, -1,academicFee);
                                 end4=false;
                                 break;
                             default:
@@ -370,21 +370,21 @@ public class JavaApplication {
                         switch (selectSem3) {
                             case 1:
                                 for (int i = 0; i < 6; i++) {
-                                    System.out.println("please enter " + (i + 1) + " semester marks  NOTE:(if you have arrears or waits for revaluation results(enter '-2' marks))");
-                                    int marks = sc.nextInt();
-                                    semester[i] = new Semester(i + 1, marks);
+                                    System.out.println( (i + 1) + " semester ");
+                                    int marks = checkArrear();
+                                    semester[i] = new Semester(i + 1, marks,academicFee);
                                 }
-                                semester[6] = new Semester(7, -1);
-                                semester[7] = new Semester(8, -1);
+                                semester[6] = new Semester(7, -1,academicFee);
+                                semester[7] = new Semester(8, -1,academicFee);
                                 end5=false;
                                 break;
                             case 2:
                                 for (int i = 0; i < 7; i++) {
-                                    System.out.println("please enter " + (i + 1) + " semester marks:  NOTE:(if you have arrears or waits for revaluation results(enter '-2' marks))");
-                                    int marks = sc.nextInt();
-                                    semester[i] = new Semester(i + 1, marks);
+                                    System.out.println((i + 1) + " semester ");
+                                    int marks = checkArrear();
+                                    semester[i] = new Semester(i + 1, marks,academicFee);
                                 }
-                                semester[7] = new Semester(8, -1);
+                                semester[7] = new Semester(8, -1,academicFee);
                                 end5=false;
                                 break;
                             default:
@@ -397,7 +397,7 @@ public class JavaApplication {
                     for(int i=0;i<8;i++){
                         System.out.println((i + 1) + " semester  ");
                         int marks = checkArrear();
-                        semester[i] = new Semester(i + 1, marks);
+                        semester[i] = new Semester(i + 1, marks,academicFee);
                     }
                     end1=false;
                     break;
