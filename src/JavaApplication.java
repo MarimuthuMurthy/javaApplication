@@ -18,7 +18,7 @@ final class Validation
     final private String password4="abc@1234";
     final private String email5="vtu15896@veltech.edu.in";
     final private String password5="abc@12345";
-    final private HashMap<String,String> lhs=new LinkedHashMap<>();
+    final private Map<String,String> lhs=new HashMap<>();
     final private String authorization="5656";
     Validation()
     {
@@ -51,9 +51,6 @@ public class JavaApplication {
     static boolean checking=true;
     static boolean end=true;
     public static Scanner sc=new Scanner(System.in);
-    public static ArrayList<Faculty> faculty = new ArrayList<>();
-
-
    public static boolean checkRoomNo(String roomNo){
         return roomNo.matches("\\d{1,9}");}
     public static  String checkStudentId(String studentId){
@@ -99,6 +96,77 @@ public class JavaApplication {
                 SubjectDetails.subjectDetails.add(subject);
             }
         }
+    }
+    public static void addSubjectsToFaculty(Faculty faculty){
+        for(int i=0;i<8;i++) {
+            System.out.println("present!!! you are in "+(i+1)+" semester"+"\n"+"press 1 : to enter into current semester....."+"\n"+"press 2 : to next semester....."+"\n"+"press 3 : end process");
+            int facultyOpinion = sc.nextInt();
+            if(facultyOpinion==1) {
+                for (Subject subject : SubjectDetails.subjectDetails) {
+                    if (subject.department.equals(faculty.departmentName) && subject.facultyId == -1 && subject.semester == i) {
+                        System.out.println(subject.subjectName + " has vacancy");
+                        System.out.println("press 1 : enroll...." + "\n" + "press 2 : select other");
+                        int selection = sc.nextInt();
+                        switch (selection) {
+                            case 1:
+                                subject.setFacultyId(faculty.facultyId);
+                                faculty.subject.add(new Subject(subject.subjectName, subject.department, i));
+                                break;
+                            case 2:
+                                break;
+                        }
+                    }
+                }
+            }
+            else if(facultyOpinion==3){
+                System.out.println("......updates successfully.......");
+                break;
+            }
+        }
+    }
+    public static void facultyModification(int facultyId){
+       Faculty faculty = checkFaculty(facultyId);
+       if(faculty!=null){
+           System.out.println("press 1 : to add subjects.....");
+           System.out.println("press 2 : to remove enroll subjects.....");
+           int selection = sc.nextInt();
+           switch(selection){
+               case 1:
+                   if(faculty.subject.isEmpty()){
+                       System.out.println("sorry!!!! you subjects are empty!!!......");
+                   }
+                   else {
+                       System.out.println("your enrolled subjects are : ");
+                       for (Subject subject : faculty.subject) {
+                           System.out.println(subject.subjectName);
+                       }
+                       addSubjectsToFaculty(faculty);
+                   }
+                   break;
+               case 2:
+                   if(faculty.subject.isEmpty()){
+                       System.out.println("sorry!!!! you have no subjects....so you cant remove subjects");
+                   }
+                   else {
+                       for (Subject totalSubjects : SubjectDetails.subjectDetails) {
+                           if(totalSubjects.facultyId == faculty.facultyId ){
+                               System.out.println("if you want to remove "+totalSubjects.subjectName+" type 1 for yes (or) type 2 for no");
+                               int select = sc.nextInt();
+                               if(select==1) {
+                                   for(Subject subject:faculty.subject){
+                                       subject.facultyId=-1;
+                                       faculty.subject.remove(subject);
+                                       break;
+                                   }
+                                   totalSubjects.facultyId=-1;
+                               }
+                           }
+                       }
+                   }
+           }
+       }else{
+           System.out.println("Faculty not found!!!!!");
+       }
     }
     public static void removeFaculty(int facultyId){
        Faculty faculty = checkFaculty(facultyId);
@@ -514,7 +582,8 @@ public class JavaApplication {
                     "\ntype 11 : UPDATE SEMESTER : "+
                     "\ntype 12 : ADD FACULTY :"+
                     "\ntype 13 : REMOVE FACULTY : "+
-                    "\ntype 14 : END : ");
+                    "\ntype 14 : FACULTY MODIFICATION"+
+                    "\ntype 15 : END : ");
             System.out.println("_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_");
             String user = sc.next().toLowerCase();
             if (!(user.matches("\\d+"))) {
@@ -890,7 +959,11 @@ public class JavaApplication {
                 int facultyId = sc.nextInt();
                 removeFaculty(facultyId);
             }
-            else if(user.equals("14"))
+            else if(user.equals("14")){
+                System.out.print("Enter Faculty Id : ");
+                facultyModification(sc.nextInt());
+            }
+            else if(user.equals("15"))
             {
                 end=false;
                 System.out.println("*****************************");
