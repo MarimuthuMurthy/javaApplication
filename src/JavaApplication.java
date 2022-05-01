@@ -1,9 +1,9 @@
 
 import java.util.*;
 class StudentException extends Exception{
-    StudentException(String hostel)
+    StudentException(String message)
     {
-        super(hostel);
+        super(message);
     }
 }
 final class Validation
@@ -53,9 +53,7 @@ public class JavaApplication {
     public static Scanner sc=new Scanner(System.in);
     public static ArrayList<Faculty> faculty = new ArrayList<>();
 
-    static{
-        facultyIntializer();
-    }
+
    public static boolean checkRoomNo(String roomNo){
         return roomNo.matches("\\d{1,9}");}
     public static  String checkStudentId(String studentId){
@@ -102,142 +100,55 @@ public class JavaApplication {
             }
         }
     }
-    public static void facultySelection(String departmentName , int semester){
-        Faculty[] faculty;
-        String[] subjects;
-       if(departmentName.equals("cse")) {
-           subjects = CseDepartment.cseSubjects[semester - 1];
-           for (int j = 0; j < subjects.length; j++) {
-               System.out.println("type.... " + j + " for modifying " + subjects[j] + " faculty");
+    public static void removeFaculty(int facultyId){
+       Faculty faculty = checkFaculty(facultyId);
+       if(faculty!=null){
+           for(Subject subject : SubjectDetails.subjectDetails){
+               if(subject.facultyId==facultyId){
+                   subject.setFacultyId(-1);
+               }
            }
-           int facultySelection = sc.nextInt();
-           System.out.println("press 1 : for adding name " + "\n" + "press 2 : for removing name");
-           int option = sc.nextInt();
-           String facultyName = CseDepartment.cseFaculties[semester - 1][facultySelection].facultyName;
-           switch (option) {
-               case 1:
-                   if (facultyName == null) {
-                       System.out.println(" Enter Faculty Name : ");
-                       CseDepartment.cseFaculties[semester - 1][facultySelection].facultyName=sc.next();
-                       System.out.println(" faculty added successfully ");
-                   } else {
-                       System.out.println("faculty is already present!!!!we cant add");
-                   }
-                   break;
-               case 2:
-                   if (facultyName != null) {
-                       CseDepartment.cseFaculties[semester - 1][facultySelection].facultyName=null;
-                       System.out.println(" faculty removed successfully ");
-                   } else {
-                       System.out.println("faculty slot is empty!!!!we cant remove");
-                   }
-                   break;
+           FacultyDetails.facultyDetails.remove(faculty);
+           System.out.println("congratulations for working here "+ faculty.facultyName +" .....warm wishes for your future work.....bye bye");
+       }
+       else{
+           System.out.println("....Faculty Id not found....");
+       }
+    }
+    public static Faculty checkFaculty(int facultyId) {
+       for(Faculty faculty:FacultyDetails.facultyDetails) {
+           if(faculty.facultyId==facultyId) {
+               return faculty;
            }
        }
-        if(departmentName.equals("ece")) {
-            subjects = EceDepartment.eceSubjects[semester - 1];
-            for (int j = 0; j < subjects.length; j++) {
-                System.out.println("type.... " + j + " for modifying " + subjects[j] + " faculty");
-            }
-            int facultySelection = sc.nextInt();
-            System.out.println("press 1 : for adding name " + "\n" + "press 2 : for removing name");
-            int option = sc.nextInt();
-            String facultyName = EceDepartment.eceFaculties[semester - 1][facultySelection].facultyName;
-            switch (option) {
-                case 1:
-                    if (facultyName == null) {
-                        System.out.println(" Enter Faculty Name : ");
-                        EceDepartment.eceFaculties[semester - 1][facultySelection].facultyName=sc.next();
-                        System.out.println(" faculty added successfully ");
-                    } else {
-                        System.out.println("faculty is already present!!!!we cant add");
-                    }
-                    break;
-                case 2:
-                    if (facultyName != null) {
-                        EceDepartment.eceFaculties[semester - 1][facultySelection].facultyName=sc.next();
-                        System.out.println(" faculty removed successfully ");
-                    } else {
-                        System.out.println("faculty slot is empty!!!!we cant remove");
-                    }
-                    break;
-            }
-        }
-        if(departmentName.equals("mech")) {
-            subjects = MechanicalDepartment.mechanicalSubjects[semester - 1];
-            for (int j = 0; j < subjects.length; j++) {
-                System.out.println("type.... " + j + " for modifying " + subjects[j] + " faculty");
-            }
-            int facultySelection = sc.nextInt();
-            System.out.println("press 1 : for adding name " + "\n" + "press 2 : for removing name");
-            int option = sc.nextInt();
-            String facultyName = MechanicalDepartment.mechanicalFaculties[semester - 1][facultySelection].facultyName;
-            switch (option) {
-                case 1:
-                    if (facultyName == null) {
-                        System.out.println(" Enter Faculty Name : ");
-                        MechanicalDepartment.mechanicalFaculties[semester - 1][facultySelection].facultyName=sc.next();
-                        System.out.println(" faculty added successfully ");
-                    } else {
-                        System.out.println("faculty is already present!!!!we cant add");
-                    }
-                    break;
-                case 2:
-                    if (facultyName != null) {
-                        MechanicalDepartment.mechanicalFaculties[semester - 1][facultySelection].facultyName=null;
-                        System.out.println(" faculty removed successfully ");
-                    } else {
-                        System.out.println("faculty slot is empty!!!!we cant remove");
-                    }
-                    break;
-            }
-        }
-        if(departmentName.equals("it")) {
-            subjects = ItDepartment.itTotalSubjects[semester - 1];
-            for (int j = 0; j < subjects.length; j++) {
-                System.out.println("type.... " + j + " for modifying " + subjects[j] + " faculty");
-            }
-            int facultySelection = sc.nextInt();
-            System.out.println("press 1 : for adding name " + "\n" + "press 2 : for removing name");
-            int option = sc.nextInt();
-            String facultyName = ItDepartment.itFaculties[semester - 1][facultySelection].facultyName;
-            switch (option) {
-                case 1:
-                    if (facultyName == null) {
-                        System.out.println(" Enter Faculty Name : ");
-                        ItDepartment.itFaculties[semester - 1][facultySelection].facultyName=null;
-                        System.out.println(" faculty added successfully ");
-                    } else {
-                        System.out.println("faculty is already present!!!!we cant add");
-                    }
-                    break;
-                case 2:
-                    if (facultyName != null) {
-                        ItDepartment.itFaculties[semester - 1][facultySelection].facultyName=null;
-                        System.out.println(" faculty removed successfully ");
-                    } else {
-                        System.out.println("faculty slot is empty!!!!we cant remove");
-                    }
-                    break;
-            }
-        }
+       return null;
     }
-    public static void findStudentUnderFaculty(int FacultyId){
+    public static void findStudentUnderFaculty(int facultyId){
+       Faculty faculty = checkFaculty(facultyId);
         if(StudentDetails.studentDetails.isEmpty()){
             System.out.println("**STUDENTS RECORDS NOT FOUND**");
-        }else {
-            for(Student student:StudentDetails.studentDetails){
-                for(int i=0;i<8;i++) {
-                    int totalSem1Subjects = student.semester[i].subject.length;
-                    for(int j=0;j<totalSem1Subjects;j++){
-                        if(student.semester[i].subject[j].facultyId==FacultyId){
-                            System.out.println(student);
+        }else if(FacultyDetails.facultyDetails.isEmpty()) {
+            System.out.println("**FACULTY RECORDS ARE NOT FOUND**");
+        }else if(faculty!=null){
+            int countOfFacultyHandlingSubjects=0;
+                for(Subject subject : SubjectDetails.subjectDetails){
+                    if(subject.facultyId==facultyId){
+                        for(Student student : StudentDetails.studentDetails){
+                            if(student.semester[findSemesterNumber(student)-1].subject[findSemesterNumber(student)-1].subjectName.equals(subject.subjectName)){
+                                System.out.println(student);
+                                countOfFacultyHandlingSubjects++;
+                            }
                         }
                     }
                 }
-            }
+            if(countOfFacultyHandlingSubjects==0){
+                System.out.println("***no students under the guidence of this faculty***");
+            };
         }
-    }
+        else{
+            System.out.println("Faculty is  not present");
+        }
+   }
     public static int findSemesterNumber(Student s){
         int count=0;
         for(int i=0;i<s.semester.length&&s.semester[i]!=null;i++){
@@ -540,7 +451,7 @@ public class JavaApplication {
         System.out.println("Enter department : ");
         String department = sc.next();
         for(int i=0;i<8;i++) {
-            System.out.println("present!!! you are in"+(i+1)+" semester"+"\n"+"press 1: to enter into current semester....."+"\n"+"press 2: to next semester.....");
+            System.out.println("present!!! you are in "+(i+1)+" semester"+"\n"+"press 1 : to enter into current semester....."+"\n"+"press 2 : to next semester....."+"\n"+"press 3 : end process");
             int facultyOpinion = sc.nextInt();
             if(facultyOpinion==1) {
                 for (Subject subject : SubjectDetails.subjectDetails) {
@@ -550,7 +461,7 @@ public class JavaApplication {
                         int selection = sc.nextInt();
                         switch (selection) {
                             case 1:
-                                subject.facultyId = facultyId;
+                                subject.setFacultyId(facultyId);
                                 handlingSubjects.add(new Subject(subject.subjectName, subject.department, i));
                                 break;
                             case 2:
@@ -559,13 +470,33 @@ public class JavaApplication {
                     }
                 }
             }
+            else if(facultyOpinion==3){
+                System.out.println("......this institute welcomes you.......");
+                break;
+            }
         }
         f = new Faculty(facultyId,facultyName,handlingSubjects,department);
         return f;
     }
     public static void facultyProcess(){
        Faculty f2 = facultyDetails();
-       FacultyDetails.facultyDetails.add(f2);
+       if(FacultyDetails.facultyDetails.isEmpty()) {
+           FacultyDetails.facultyDetails.add(f2);
+       }
+       else {
+           int duplicantCheck=0;
+           for (Faculty faculty : FacultyDetails.facultyDetails) {
+               if(faculty.facultyId==f2.facultyId){
+                   System.out.println("Sorry!!!!! faculty id is already registered.....");
+                   duplicantCheck++;
+                   break;
+               }
+           }
+           if(duplicantCheck==0){
+               FacultyDetails.facultyDetails.add(f2);
+               System.out.println("Faculty details is added successfully!!!!!");
+           }
+       }
     }
     public static void process() {
         while (end) {
@@ -582,7 +513,8 @@ public class JavaApplication {
                     "\ntype 10 : ALL SEMESTER TOTAL MARKS : "+
                     "\ntype 11 : UPDATE SEMESTER : "+
                     "\ntype 12 : ADD FACULTY :"+
-                    "\ntype 13 : END : ");
+                    "\ntype 13 : REMOVE FACULTY : "+
+                    "\ntype 14 : END : ");
             System.out.println("_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_");
             String user = sc.next().toLowerCase();
             if (!(user.matches("\\d+"))) {
@@ -953,13 +885,17 @@ public class JavaApplication {
             else if(user.equals("12")){
                 facultyProcess();
             }
-            else if(user.equals("13"))
+            else if(user.equals("13")){
+                System.out.print("Please enter Faculty Id : ");
+                int facultyId = sc.nextInt();
+                removeFaculty(facultyId);
+            }
+            else if(user.equals("14"))
             {
                 end=false;
                 System.out.println("*****************************");
                 System.out.println("successfully end the process");
                 System.out.println("******************************");
-
             }
         }
     }
@@ -981,6 +917,7 @@ public class JavaApplication {
     {
         if(check()==1)
         {
+            facultyIntializer();
             while(end)
             {
                 process();

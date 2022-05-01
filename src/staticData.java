@@ -12,7 +12,6 @@ class CseSubjectsAndFaculty {
 }
 class CseDepartment{
     static String[][] cseSubjects = {CseSubjectsAndFaculty.cseSubjectsSemester1, CseSubjectsAndFaculty.cseSubjectsSemester2, CseSubjectsAndFaculty.cseSubjectsSemester3, CseSubjectsAndFaculty.cseSubjectsSemester4, CseSubjectsAndFaculty.cseSubjectsSemester5, CseSubjectsAndFaculty.cseSubjectsSemester6, CseSubjectsAndFaculty.cseSubjectsSemester7, CseSubjectsAndFaculty.cseSubjectsSemester8};
-    static Faculty[][] cseFaculties= new Faculty[8][];
 }
     class EceSubjectsAndFaculty {
         static String[] eceSubjectsSemester1 = {"analog", "system", "communication", "wireless", "networks"};
@@ -26,7 +25,6 @@ class CseDepartment{
     }
 class EceDepartment{
     static String[][] eceSubjects = {EceSubjectsAndFaculty.eceSubjectsSemester1, EceSubjectsAndFaculty.eceSubjectsSemester2, EceSubjectsAndFaculty.eceSubjectsSemester3, EceSubjectsAndFaculty.eceSubjectsSemester4, EceSubjectsAndFaculty.eceSubjectsSemester5, EceSubjectsAndFaculty.eceSubjectsSemester6, EceSubjectsAndFaculty.eceSubjectsSemester7, EceSubjectsAndFaculty.eceSubjectsSemester8};
-    static Faculty[][] eceFaculties= new Faculty[8][];
 }
 
         class MechanicalSubjectAndFaculty {
@@ -41,7 +39,6 @@ class EceDepartment{
         }
 class MechanicalDepartment {
     static String[][] mechanicalSubjects = {MechanicalSubjectAndFaculty.mechanicalSubjectsSemester1, MechanicalSubjectAndFaculty.mechanicalSubjectsSemester2, MechanicalSubjectAndFaculty.mechanicalSubjectsSemester3, MechanicalSubjectAndFaculty.mechanicalSubjectsSemester4, MechanicalSubjectAndFaculty.mechanicalSubjectsSemester5, MechanicalSubjectAndFaculty.mechanicalSubjectsSemester6, MechanicalSubjectAndFaculty.mechanicalSubjectsSemester7, MechanicalSubjectAndFaculty.mechanicalSubjectsSemester8};
-    static Faculty[][] mechanicalFaculties = new Faculty[8][];
 }
 
 class ItsubjectsAndFaculty {
@@ -56,7 +53,6 @@ class ItsubjectsAndFaculty {
     }
     class ItDepartment{
         static String[][] itTotalSubjects = {ItsubjectsAndFaculty.itSubjectsSemester1,ItsubjectsAndFaculty.itSubjectsSemester2,ItsubjectsAndFaculty.itSubjectsSemester3,ItsubjectsAndFaculty.itSubjectsSemester4,ItsubjectsAndFaculty.itSubjectsSemester5,ItsubjectsAndFaculty.itSubjectsSemester6,ItsubjectsAndFaculty.itSubjectsSemester7,ItsubjectsAndFaculty.itSubjectsSemester8};
-        static Faculty[][] itFaculties= new Faculty[8][];
 }
     class StudentDetails{
         static List<Student> studentDetails=new ArrayList<>();
