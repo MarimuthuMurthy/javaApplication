@@ -1,4 +1,5 @@
 
+import java.sql.SQLOutput;
 import java.util.*;
 class StudentException extends Exception{
     StudentException(String message)
@@ -18,7 +19,7 @@ final class Validation
     final private String password4="abc@1234";
     final private String email5="vtu15896@veltech.edu.in";
     final private String password5="abc@12345";
-    final private Map<String,String> lhs=new HashMap<>();
+    private Map<String,String> lhs=new HashMap<>();
     final private String authorization="5656";
     Validation()
     {
@@ -287,7 +288,7 @@ public class JavaApplication {
     }
     public static void updateSemester(Student student){
         int semNumber = findSemesterNumber(student);
-        System.out.println("Your semester marks are recorded till semester number "+(semNumber-1));
+        System.out.println("Your semester marks are recorded till semester number "+(semNumber));
         System.out.println("Enter your present semester : ");
         System.out.println(
                 "press 1 : semester 1"+"\n"+
@@ -300,7 +301,8 @@ public class JavaApplication {
                 "press 8 : semester 8"+"\n");
         int select = sc.nextInt() ;
         while (select > 8 || select < 0) {
-            System.out.println("please select correct semester");
+            System.out.println("                   ❌ invalid");
+            System.out.print("please select correct semester");
             select = sc.nextInt() - 1;
         }
         if(select==semNumber){
@@ -319,7 +321,8 @@ public class JavaApplication {
         System.out.print("enter marks :");
         int marks = sc.nextInt();
         while(marks < 0 ||marks >100){
-            System.out.println("Invalid marks ......reenter marks again");
+            System.out.println("                   ❌ invalid");
+            System.out.print("Re enter marks again : ");
             marks=sc.nextInt();
         }
             return marks;
@@ -329,7 +332,9 @@ public class JavaApplication {
         System.out.println("press 2 : if you dont want to add marks ");
         String option = sc.next();
         while(!option.matches("[1-2]")){
-            System.out.println("please enter correct option");
+            System.out.println("                   ❌ invalid");
+            System.out.print(" please enter correct option : ");
+            option = sc.next();
         }
         return option.equals("1");
    }
@@ -341,13 +346,15 @@ public class JavaApplication {
         String studentName = sc.nextLine();
 
         while (!studentName.matches("[A-Za-z.\\s]*")) {
-            System.out.println("Invalid name! please enter again");
+            System.out.println("                   ❌ invalid");
+            System.out.print("please enter again : ");
             studentName = sc.nextLine();
         }
         System.out.print("Enter student phone number: +91");
         String studentPhone = sc.next();
         while (!studentPhone.matches("[0-9]{10}")) {
-            System.out.println(" Invalid Phone Number! please enter again ");
+            System.out.println("                   ❌ invalid");
+            System.out.print(" please enter again : ");
             studentPhone = sc.next();
         }
         System.out.println(" Please Enter Your Address Details ");
@@ -378,7 +385,8 @@ public class JavaApplication {
         System.out.print("Enter student room no:");
         String studentRoom = sc.next();
         while (!checkRoomNo(studentRoom)) {
-            System.out.print("Invalid Room Number! please enter again");
+            System.out.println("                   ❌ invalid");
+            System.out.print(" please enter again : ");
             studentRoom = sc.next();
         }
         int intStudentRoom=Integer.parseInt(studentRoom);
@@ -387,7 +395,8 @@ public class JavaApplication {
         System.out.println("press 1 : 1st year"+"\n"+"press 2 : 2nd year"+"\n"+"press 3 : 3rd year"+"\n"+"press 4 : 4th year");
         String select1 = sc.next();
         while(!select1.matches("[1-4]")){
-            System.out.println("Invalid input!!!!! please enter current study year");
+            System.out.println("                   ❌ invalid");
+            System.out.print(" please enter current study year : ");
             select1 = sc.next();
         }
         int select = Integer.parseInt(select1);
@@ -398,7 +407,8 @@ public class JavaApplication {
                 "\n"+"press 4: IT...........");
         String departmentName=sc.next();
         while(!departmentName.matches("[1-4]")){
-            System.out.println("Invalid input!!!!! please enter current department");
+            System.out.println("                   ❌ invalid");
+            System.out.print(" please enter current department : ");
             departmentName = sc.next();
         }
         switch(departmentName){
@@ -533,22 +543,25 @@ public class JavaApplication {
         System.out.print("Enter faculty id : ");
         String checkFacultyId = sc.next();
         while(!checkFacultyId.matches("[0-9]+")){
-            System.out.println("Invalid Faculty Id!!!!please enter again");
+            System.out.println("                   ❌ invalid");
+            System.out.print(" please enter again : ");
             checkFacultyId = sc.next();
         }
         int facultyId = Integer.parseInt(checkFacultyId);
-        System.out.print("Enter Faculty name : ");
+        System.out.print(" Enter Faculty name : ");
         sc.nextLine();
         String facultyName = sc.nextLine();
         while(!(facultyName.matches("[a-zA-Z.\\s]*"))){
-            System.out.println("Invalid Name!!!! please enter again");
+            System.out.println("                   ❌ invalid");
+            System.out.print(" please enter again : ");
             facultyName=sc.next();
         }
         ArrayList<Subject> handlingSubjects = new ArrayList<>();
         System.out.println("Select department : "+"\n"+" press 1 : cse "+"\n"+" press 2 : ece "+"\n"+" press 3 : mechanical "+"\n"+" press 4 : it ");
         String departmentNo = sc.next();
         while(!(departmentNo.matches("[1-4]"))){
-            System.out.println("Invalid Department!!!!!.....please enter again");
+            System.out.println("                   ❌ invalid");
+            System.out.print(" please enter again : ");
             departmentNo = sc.next();
         }
         String department ="";
@@ -838,8 +851,8 @@ public class JavaApplication {
                                             System.out.println("WRONG INPUT");
                                             askMarks = sc.next();
                                         }
-                                        if (askMarks.equals("1") && s2.semester[i].subject[j].subjectMarks== -1) {
-                                            s2.semester[i].subject[j].subjectMarks = checkMarks();
+                                        if (askMarks.equals("1") && s2.semester[i].subject[j].subjectMarks == -1) {
+                                            s2.semester[i].subject[j].subjectMarks=checkMarks();
                                         } else if (askMarks.equals("1") && !(s2.semester[i].subject[j].subjectMarks == -1 && s2.semester[i].subject[j].subjectMarks == -2)) {
                                             System.out.println("marks of " + s2.semester[i].subject[j].subjectName + " is already added");
                                         }
@@ -1034,30 +1047,37 @@ public class JavaApplication {
         System.out.print(".*.*.*.*.*.*.*.*.*.*."+"\n"+"type( 1 or 2 )...");
         String userRequire = sc.next();
         while(!userRequire.matches("[1-2]")){
-            System.out.println("Oooooo.......we understand !!! you are feel high excited to use it....type slowly and valid");
+            System.out.println("                               ✘ Invalid ");
+            System.out.print("Enter again : ");
             userRequire = sc.next();
         }
+        System.out.println(" ✅ valid ");
         Validation v1=new Validation();
         switch(userRequire){
             case "1":
                 System.out.print("Enter new email id : ");
                 String email = sc.next();
                 while(!email.matches("[a-zA-Z0-9]+@[a-zA-Z.]+")){
-                    System.out.println("Invalid email.....");
+                    System.out.println("                               ✘ Invalid ");
+                    System.out.print("Enter again : ");
                     email = sc.next();
                 }
                 while(v1.checkDupliaction(email)){
-                    System.out.println("Email id already registered....Enter new email address");
+                    System.out.print("Email id already registered....Enter new email address : ");
                     email = sc.next();
                 }
+                System.out.println(" ✅ valid ");
                 System.out.println("_*_*_*_Password constraints_*_*_*_");
-                System.out.println("> atleast contains password length 8 and maximum length of 16"+"\n"+"> doesn't start with small letter"+"\n"+"> contains atleast one symbol of (. ,@ , $, # , &)"+"\n"+"> conatins number and alphabets");
+                System.out.println(" ✅ atleast contains password length 8 and maximum length of 16"+"\n"+" ✅ doesn't start with small letter"+"\n"+" ✅ contains atleast one symbol of (. ,@ , $, # , &)"+"\n"+" ✅ conatins number and alphabets");
                 System.out.println("eg.password : Murthy.aa@1");
+                System.out.print("Enter the password :");
                 String password = sc.next();
                 while(!password.matches("[A-Z]{1}[A-Za-z0-9@$#&.]{2,15}")){
-                    System.out.println("Password doesnt match our requiremenst.....try again");
+                    System.out.println("✘ Invalid " );
+                    System.out.print("Password doesnt match our requirement Enter again : ");
                     password = sc.next();
                 }
+                System.out.println(" ✅ valid");
                 System.out.println("Account added successfully....");
                 v1.addCredentials(email,password);
                 return 1;
