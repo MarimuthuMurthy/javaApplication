@@ -10,7 +10,7 @@ final class Validation
 {
     final private String email1="vtu15892@veltech.edu.in";
     final private String password1="abc@1";
-    final private String email2="vtu15893veltech.edu.in";
+    final private String email2="vtu15893@veltech.edu.in";
     final private String password2="abc@12";
     final private String email3="vtu15894@veltech.edu.in";
     final private String password3="abc@123";
@@ -28,7 +28,18 @@ final class Validation
         lhs.put(email4,password4);
         lhs.put(email5,password5);
     }
+    public void addCredentials(String email , String password){
+        lhs.put(email,password);
+    }
     Set<String> keys=lhs.keySet();
+    public boolean checkDupliaction(String email){
+        for(String key:keys){
+            if(key.equals(email)){
+                return true;
+            }
+        }
+        return false;
+    }
     public int checkCredentials(String email,String password)
     {
         for(String key:keys)
@@ -1018,16 +1029,49 @@ public class JavaApplication {
     public static int check()
     {
         sc=new Scanner(System.in);
-        System.out.println("Welcome!!!!.....Administrator.....");
-        System.out.print("Enter email id : ");
-        String adminEmail=sc.next();
-        System.out.print("Enter Password : ");
-        String adminPassword =sc.next();
-        Validation v1=new Validation();
-        if(v1.checkCredentials(adminEmail,adminPassword)==1){
-            return 1;
+        System.out.println(".*.*.*.*.*.*.*.*.WELCOME.*.*.*.*.*.*.*.*.*.");
+        System.out.println("press 1 : for signup (Create new account) "+"\n"+"press 2 : for signin (already existing account)");
+        System.out.print(".*.*.*.*.*.*.*.*.*.*."+"\n"+"type( 1 or 2 )...");
+        String userRequire = sc.next();
+        while(!userRequire.matches("[1-2]")){
+            System.out.println("Oooooo.......we understand !!! you are feel high excited to use it....type slowly and valid");
+            userRequire = sc.next();
         }
-        else{return 0;}
+        Validation v1=new Validation();
+        switch(userRequire){
+            case "1":
+                System.out.print("Enter new email id : ");
+                String email = sc.next();
+                while(!email.matches("[a-zA-Z0-9]+@[a-zA-Z.]+")){
+                    System.out.println("Invalid email.....");
+                    email = sc.next();
+                }
+                while(v1.checkDupliaction(email)){
+                    System.out.println("Email id already registered....Enter new email address");
+                    email = sc.next();
+                }
+                System.out.println("_*_*_*_Password constraints_*_*_*_");
+                System.out.println("> atleast contains password length 8 and maximum length of 16"+"\n"+"> doesn't start with small letter"+"\n"+"> contains atleast one symbol of (. ,@ , $, # , &)"+"\n"+"> conatins number and alphabets");
+                System.out.println("eg.password : Murthy.aa@1");
+                String password = sc.next();
+                while(!password.matches("[A-Z]{1}[A-Za-z0-9@$#&.]{2,15}")){
+                    System.out.println("Password doesnt match our requiremenst.....try again");
+                    password = sc.next();
+                }
+                System.out.println("Account added successfully....");
+                v1.addCredentials(email,password);
+                return 1;
+            case "2":
+                System.out.print("Enter email id : ");
+                String adminEmail=sc.next();
+                System.out.print("Enter Password : ");
+                String adminPassword =sc.next();
+                if(v1.checkCredentials(adminEmail,adminPassword)==1){
+                    return 1;
+                }
+                break;
+        }
+        return 0;
     }
     public static void main(String[] args)
     {
