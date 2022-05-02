@@ -30,7 +30,7 @@ class SubjectWithMarks extends Subject{
     int subjectMarks;
     SubjectWithMarks(String subjectName, String department, int semester,int marks) {
         super(subjectName, department, semester);
-        this.subjectMarks=marks;
+        this.subjectMarks=-1;
     }
 }
 class Student
@@ -57,7 +57,7 @@ class Student
         for(int i=0;i<semNumber;i++){
             System.out.println("******* SEMESTER "+(i+1)+" MARKS*******");
             for (SubjectWithMarks subject : semester[i].subject) {
-                if(!(semester[i].subject[i].subjectMarks==-1)) {
+                if(subject.subjectMarks!=-1) {
                     System.out.println("Subject Name " + subject.subjectName + " SubjectScore :" + subject.subjectMarks);
                 }else {
                     System.out.println("Subject " + subject.subjectName + " marks are not added");
