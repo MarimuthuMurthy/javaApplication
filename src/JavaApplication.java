@@ -66,7 +66,7 @@ public class JavaApplication {
             }
         }return null;
     }
-    public static void facultyIntializer(){
+    public static void subjectIntializer(){
         String[] subjects;
         for(int j=0;j<8;j++) {
             subjects = CseDepartment.cseSubjects[j];
@@ -105,6 +105,7 @@ public class JavaApplication {
                 for (Subject subject : SubjectDetails.subjectDetails) {
                     if (subject.department.equals(faculty.departmentName) && subject.facultyId == -1 && subject.semester == i) {
                         System.out.println(subject.subjectName + " has vacancy");
+                        System.out.println("_*_*_*_*_*_*_*_*_*_*_*_*_*_*_");
                         System.out.println("press 1 : enroll...." + "\n" + "press 2 : select other");
                         int selection = sc.nextInt();
                         switch (selection) {
@@ -127,7 +128,7 @@ public class JavaApplication {
     public static void facultyModification(int facultyId){
        Faculty faculty = checkFaculty(facultyId);
        if(faculty!=null){
-           System.out.println("press 1 : to add subjects.....");
+           System.out.println("press 1 : to add extra subjects.....");
            System.out.println("press 2 : to remove enroll subjects.....");
            int selection = sc.nextInt();
            switch(selection){
@@ -371,29 +372,35 @@ public class JavaApplication {
         Semester[] semester=new Semester[8] ;
         System.out.println(" Select Current Study Year   ");
         System.out.println("press 1 : 1st year"+"\n"+"press 2 : 2nd year"+"\n"+"press 3 : 3rd year"+"\n"+"press 4 : 4th year");
-        int select = sc.nextInt();
+        String select1 = sc.next();
+        while(!select1.matches("[1-4]")){
+            System.out.println("Invalid input!!!!! please enter current study year");
+            select1 = sc.next();
+        }
+        int select = Integer.parseInt(select1);
         System.out.println("select department "+
                 "\n"+"press 1: CSE.........."+
                 "\n"+"press 2: ECE.........."+
                 "\n"+"press 3: MECH........."+
                 "\n"+"press 4: IT...........");
         String departmentName=sc.next();
-        int departmentName1=Integer.parseInt(departmentName);
-        switch(departmentName1){
-            case 1:
+        while(!departmentName.matches("[1-4]")){
+            System.out.println("Invalid input!!!!! please enter current department");
+            departmentName = sc.next();
+        }
+        switch(departmentName){
+            case "1":
                 departmentName="cse";
                 break;
-            case 2:
+            case "2":
                 departmentName="ece";
                 break;
-            case 3:
+            case "3":
                 departmentName="mech";
                 break;
-            case 4:
+            case "4":
                 departmentName="it";
                 break;
-            default:
-                throw new StudentException("sorry!!!other departments students are allowed");
         }
         boolean end1=true;
         while(end1) {
@@ -510,22 +517,56 @@ public class JavaApplication {
     }
     public static Faculty facultyDetails() {
         Faculty f;
-        System.out.println("Enter faculty id ");
-        int facultyId = sc.nextInt();
-        System.out.println("Enter Faculty name : ");
+        System.out.print("Enter faculty id : ");
+        String checkFacultyId = sc.next();
+        while(!checkFacultyId.matches("[0-9]+")){
+            System.out.println("Invalid Faculty Id!!!!please enter again");
+            checkFacultyId = sc.next();
+        }
+        int facultyId = Integer.parseInt(checkFacultyId);
+        System.out.print("Enter Faculty name : ");
         sc.nextLine();
         String facultyName = sc.nextLine();
+        while(!(facultyName.matches("[a-zA-Z.\\s]*"))){
+            System.out.println("Invalid Name!!!! please enter again");
+            facultyName=sc.next();
+        }
         ArrayList<Subject> handlingSubjects = new ArrayList<>();
-        System.out.println("Enter department : ");
-        String department = sc.next();
+        System.out.println("Select department : "+"\n"+" press 1 : cse "+"\n"+" press 2 : ece "+"\n"+" press 3 : mechanical "+"\n"+" press 4 : it ");
+        String departmentNo = sc.next();
+        while(!(departmentNo.matches("[1-4]"))){
+            System.out.println("Invalid Department!!!!!.....please enter again");
+            departmentNo = sc.next();
+        }
+        String department ="";
+        switch (departmentNo){
+            case "1":
+                department="cse";
+                break;
+            case "2":
+                department="ece";
+                break;
+            case "3":
+                department="mech";
+                break;
+            case "4":
+                department="it";
+                break;
+        }
         for(int i=0;i<8;i++) {
-            System.out.println("present!!! you are in "+(i+1)+" semester"+"\n"+"press 1 : to enter into current semester....."+"\n"+"press 2 : to next semester....."+"\n"+"press 3 : end process");
-            int facultyOpinion = sc.nextInt();
+            System.out.println("present!!! you are in "+(i+1)+" semester"+"\n"+"press 1 : enroll in current semester....."+"\n"+"press 2 : go to next semester....."+"\n"+"press 3 : end enroll process");
+            String facultyOpinion1 = sc.next();
+            while(!facultyOpinion1.matches("[1-3]")){
+                System.out.println("Invalid input...please enter again");
+                facultyOpinion1=sc.next();
+            }
+            int facultyOpinion = Integer.parseInt(facultyOpinion1);
             if(facultyOpinion==1) {
                 for (Subject subject : SubjectDetails.subjectDetails) {
                     if (subject.department.equals(department) && subject.facultyId == -1 && subject.semester == i) {
                         System.out.println(subject.subjectName + " has vacancy");
-                        System.out.println("press 1 : enroll...." + "\n" + "press 2 : select other");
+                        System.out.println("_*_*_*_*_*_*_*_*_*_*_*_*_*_*_");
+                        System.out.println("press 1 : enroll subject" + "\n" + "press 2 : select other subject");
                         int selection = sc.nextInt();
                         switch (selection) {
                             case 1:
@@ -990,7 +1031,7 @@ public class JavaApplication {
     {
         if(check()==1)
         {
-            facultyIntializer();
+            subjectIntializer();
             while(end)
             {
                 process();
