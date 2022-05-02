@@ -67,7 +67,8 @@ public class JavaApplication {
         return roomNo.matches("\\d{1,9}");}
     public static  String checkStudentId(String studentId){
         while(!(studentId.matches("\\d+"))){
-            System.out.print("StudentId is Invalid , Re enter studentId : ");
+            System.out.println("                   ❌ invalid");
+            System.out.print("Re enter studentId again : ");
             studentId=sc.next();
         }return studentId;
     }
@@ -111,11 +112,11 @@ public class JavaApplication {
     }
     public static void addSubjectsToFaculty(Faculty faculty){
         for(int i=0;i<8;i++) {
-            System.out.println("present!!! you are in "+(i+1)+" semester"+"\n"+"press 1 : to enter into current semester....."+"\n"+"press 2 : to next semester....."+"\n"+"press 3 : end process");
+            System.out.println("present!!! you are in "+(i+1)+" semester"+"\n"+"press 1️⃣ : to enter into current semester....."+"\n"+"press 2️⃣ : to next semester....."+"\n"+"press 3️⃣ : end process");
             String facultyOpt = sc.next();
             while(!facultyOpt.matches("[1-3]")){
                 System.out.println("                   ❌ invalid");
-                System.out.print("Re enter  again : ");
+                System.out.print("please reenter again : ");
                 facultyOpt = sc.next();
             }
             int facultyOpinion = Integer.parseInt(facultyOpt);
@@ -124,7 +125,7 @@ public class JavaApplication {
                     if (subject.department.equals(faculty.departmentName) && subject.facultyId == -1 && subject.semester == i) {
                         System.out.println(subject.subjectName + " has vacancy");
                         System.out.println("_*_*_*_*_*_*_*_*_*_*_*_*_*_*_");
-                        System.out.println("press 1 : enroll...." + "\n" + "press 2 : select other");
+                        System.out.println("press 1️ : enroll...." + "\n" + "press 2️ : select other");
                         String selection = sc.next();
                         switch (selection) {
                             case "1":
@@ -147,8 +148,8 @@ public class JavaApplication {
     public static void facultyModification(int facultyId){
        Faculty faculty = checkFaculty(facultyId);
        if(faculty!=null){
-           System.out.println("press 1 : to add extra subjects.....");
-           System.out.println("press 2 : to remove enroll subjects.....");
+           System.out.println("press 1️ : to add extra subjects.....");
+           System.out.println("press 2️ : to remove enroll subjects.....");
            int selection = sc.nextInt();
            switch(selection){
                case 1:
@@ -170,7 +171,7 @@ public class JavaApplication {
                    else {
                        for (Subject totalSubjects : SubjectDetails.subjectDetails) {
                            if(totalSubjects.facultyId == faculty.facultyId ){
-                               System.out.println("if you want to remove "+totalSubjects.subjectName+" type 1 for yes (or) type 2 for no");
+                               System.out.println("if you want to remove "+totalSubjects.subjectName+" type 1️ for yes (or) type 2️ for no");
                                int select = sc.nextInt();
                                if(select==1) {
                                    for(Subject subject:faculty.subject){
@@ -1067,8 +1068,8 @@ public class JavaApplication {
     {
         sc=new Scanner(System.in);
         System.out.println(".*.*.*.*.*.*.*.*.WELCOME.*.*.*.*.*.*.*.*.*.");
-        System.out.println("press 1️: for signup ( \uD83D\uDC49 Create new account) "+"\n"+"press 2️ : for signin ( \uD83D\uDC49 already existing account)");
-        System.out.print(".*.*.*.*.*.*.*.*.*.*."+"\n"+"type( 1️ or 2️ )...");
+        System.out.println("press 1️: for signup  \uD83D\uDC49 Create new account "+"\n"+"press 2️: for signin  \uD83D\uDC49 already existing account");
+        System.out.print(".*.*.*.*.*.*.*.*.*.*."+"\n"+"type( 1️ or 2️ ) \uD83D\uDC49 ");
         String userRequire = sc.next();
         while(!userRequire.matches("[1-2]")){
             System.out.println("                               ✘ Invalid ");
@@ -1081,7 +1082,7 @@ public class JavaApplication {
             case "1":
                 System.out.print("Enter new email id : ");
                 String email = sc.next();
-                while(!email.matches("[a-zA-Z0-9]+@[a-zA-Z.]+")){
+                while(!email.matches("[a-zA-Z0-9]+@[a-zA-Z]+.[a-z]+[.a-z]*")){
                     System.out.println("                               ✘ Invalid ");
                     System.out.print("Enter again : ");
                     email = sc.next();
