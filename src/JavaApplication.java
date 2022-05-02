@@ -112,20 +112,27 @@ public class JavaApplication {
     public static void addSubjectsToFaculty(Faculty faculty){
         for(int i=0;i<8;i++) {
             System.out.println("present!!! you are in "+(i+1)+" semester"+"\n"+"press 1 : to enter into current semester....."+"\n"+"press 2 : to next semester....."+"\n"+"press 3 : end process");
-            int facultyOpinion = sc.nextInt();
+            String facultyOpt = sc.next();
+            while(!facultyOpt.matches("[1-3]")){
+                System.out.println("                   ❌ invalid");
+                System.out.print("Re enter  again : ");
+                facultyOpt = sc.next();
+            }
+            int facultyOpinion = Integer.parseInt(facultyOpt);
             if(facultyOpinion==1) {
                 for (Subject subject : SubjectDetails.subjectDetails) {
                     if (subject.department.equals(faculty.departmentName) && subject.facultyId == -1 && subject.semester == i) {
                         System.out.println(subject.subjectName + " has vacancy");
                         System.out.println("_*_*_*_*_*_*_*_*_*_*_*_*_*_*_");
                         System.out.println("press 1 : enroll...." + "\n" + "press 2 : select other");
-                        int selection = sc.nextInt();
+                        String selection = sc.next();
                         switch (selection) {
-                            case 1:
+                            case "1":
                                 subject.setFacultyId(faculty.facultyId);
                                 faculty.subject.add(new Subject(subject.subjectName, subject.department, i));
+                                System.out.println(subject.subjectName+" enrolled Successfully");
                                 break;
-                            case 2:
+                            case "2":
                                 break;
                         }
                     }
@@ -299,12 +306,13 @@ public class JavaApplication {
                 "press 6 : semester 6"+"\n"+
                 "press 7 : semester 7"+"\n"+
                 "press 8 : semester 8"+"\n");
-        int select = sc.nextInt() ;
-        while (select > 8 || select < 0) {
+        String selection = sc.next();
+        while(!selection.matches("[1-8]")){
             System.out.println("                   ❌ invalid");
             System.out.print("please select correct semester");
-            select = sc.nextInt() - 1;
+            selection = sc.next();
         }
+        int select = Integer.parseInt(selection);
         if(select==semNumber){
             System.out.println("we_can't_update_because_you_are_studying_same_semester");
         }
@@ -338,18 +346,20 @@ public class JavaApplication {
         }
         return option.equals("1");
    }
+   public static String nameValidation(String name){
+       while(!name.matches("[A-Za-z.\\s]+")){
+           System.out.println("                   ❌ invalid");
+           System.out.println("please enter again : ");
+           name =sc.nextLine();
+       }
+       return name;
+   }
     public static Student getDetails() throws StudentException
     {
         System.out.println("Welcome!!!!...please Enter the Student Detail....");
         System.out.print("Enter student name:");
         sc.nextLine();
-        String studentName = sc.nextLine();
-
-        while (!studentName.matches("[A-Za-z.\\s]*")) {
-            System.out.println("                   ❌ invalid");
-            System.out.print("please enter again : ");
-            studentName = sc.nextLine();
-        }
+        String studentName = nameValidation(sc.nextLine());
         System.out.print("Enter student phone number: +91");
         String studentPhone = sc.next();
         while (!studentPhone.matches("[0-9]{10}")) {
@@ -362,14 +372,14 @@ public class JavaApplication {
         sc.nextLine();
         String doorNumber = sc.nextLine();
         System.out.print("Enter StreetName : ");
-        String streetName = sc.nextLine();
+        String streetName = nameValidation(sc.nextLine());
         System.out.print("Enter city Name : ");
-        String cityName = sc.nextLine();
+        String cityName = nameValidation(sc.nextLine());
         System.out.print("Enter State Name : ");
-        String stateName = sc.nextLine();
+        String stateName = nameValidation(sc.nextLine());
         System.out.println(" Select Your Favourite Hostel ");
-        System.out.println( "press 1:Prince hostel"+
-                           "\n"+"press 2:Leaders hostel");
+        System.out.println( "press 1️⃣:Prince hostel"+
+                           "\n"+"press 2️⃣:Leaders hostel");
         String studentHostel = sc.next();
         int studentHostel1=Integer.parseInt(studentHostel);
         switch(studentHostel1){
@@ -392,7 +402,7 @@ public class JavaApplication {
         int intStudentRoom=Integer.parseInt(studentRoom);
         Semester[] semester=new Semester[8] ;
         System.out.println(" Select Current Study Year   ");
-        System.out.println("press 1 : 1st year"+"\n"+"press 2 : 2nd year"+"\n"+"press 3 : 3rd year"+"\n"+"press 4 : 4th year");
+        System.out.println("press 1️⃣ : 1st year"+"\n"+"press 2️⃣ : 2nd year"+"\n"+"press 3️⃣ : 3rd year"+"\n"+"press 4️⃣ : 4th year");
         String select1 = sc.next();
         while(!select1.matches("[1-4]")){
             System.out.println("                   ❌ invalid");
@@ -401,10 +411,10 @@ public class JavaApplication {
         }
         int select = Integer.parseInt(select1);
         System.out.println("select department "+
-                "\n"+"press 1: CSE.........."+
-                "\n"+"press 2: ECE.........."+
-                "\n"+"press 3: MECH........."+
-                "\n"+"press 4: IT...........");
+                "\n"+"press 1️⃣ : CSE.........."+
+                "\n"+"press 2️: ECE.........."+
+                "\n"+"press 3️: MECH........."+
+                "\n"+"press 4️: IT...........");
         String departmentName=sc.next();
         while(!departmentName.matches("[1-4]")){
             System.out.println("                   ❌ invalid");
@@ -430,11 +440,11 @@ public class JavaApplication {
             switch (select) {
                 case 1:
                     System.out.println("   select semester   ");
-                    System.out.println("press 1: 1st semester");
-                    System.out.println("press 2: 2nd semester");
-                    int selectSem = sc.nextInt();
+                    System.out.println("press 1️: 1st semester");
+                    System.out.println("press 2️: 2nd semester");
                     boolean end2= true;
                     while(end2) {
+                        int selectSem = sc.nextInt();
                         switch (selectSem) {
                             case 1:
                                 semester[0] = new Semester( 1, matchSemesterAndDepartment(departmentName,0));
@@ -447,85 +457,89 @@ public class JavaApplication {
                                 end2=false;
                                 break;
                             default:
-                                System.out.println("*****Select Valid Semester*****");
+                                System.out.println("                   ❌ invalid");
+                                System.out.print(" Please enter again : ");
                         }
                     }
                     end1=false;
                     break;
                 case 2:
                     System.out.println("    Select Semester   ");
-                    System.out.println("press 1 : 3rd semester");
-                    System.out.println("press 2 : 4th semester");
+                    System.out.println("press 1️ : 3rd semester");
+                    System.out.println("press 2️ : 4th semester");
                     boolean end3=true;
                     while(end3) {
-                        int selectSem1 = sc.nextInt();
+                        String selectSem1 = sc.next();
                         switch (selectSem1) {
-                            case 1:
+                            case "1":
                                 for (int i = 0; i < 3; i++) {
                                     semester[i] = new Semester(i + 1, matchSemesterAndDepartment(departmentName,i));
                                 }
                                 end3=false;
                                 break;
-                            case 2:
+                            case "2":
                                 for (int i = 0; i < 4; i++) {
                                     semester[i] = new Semester(i + 1, matchSemesterAndDepartment(departmentName,i));
                                 }
                                 end3=false;
                                 break;
                             default:
-                                System.out.println("*******INVALID SEMESTER******");
+                                System.out.println("                   ❌ invalid");
+                                System.out.print(" Please enter again : ");
                         }
                     }
                     end1=false;
                     break;
                 case 3:
                     System.out.println("    Select Semester   ");
-                    System.out.println("press 1 : 5rd semester");
-                    System.out.println("press 2 : 6th semester");
+                    System.out.println("press 1️ : 5rd semester");
+                    System.out.println("press 2️ : 6th semester");
                     boolean end4=true;
                     while (end4) {
-                        int selectSem2 = sc.nextInt();
+                        String selectSem2 = sc.next();
                         switch (selectSem2) {
-                            case 1:
+                            case "1":
                                 for (int i = 0; i < 5; i++) {
                                     semester[i] = new Semester(i + 1, matchSemesterAndDepartment(departmentName,i));
                                 }
                                 end4=false;
                                 break;
-                            case 2:
+                            case "2":
                                 for (int i = 0; i < 6; i++) {
                                     semester[i] = new Semester(i + 1, matchSemesterAndDepartment(departmentName,i));
                                 }
                                 end4=false;
                                 break;
                             default:
-                                System.out.println("*****INVALID SEMESTER*****");
+                                System.out.println("                   ❌ invalid");
+                                System.out.print(" Please enter again : ");
                         }
                     }
                     end1=false;
                     break;
                 case 4:
                     System.out.println("    Select Semester   ");
-                    System.out.println("press 1 : 7rd semester");
-                    System.out.println("press 2 : 8th semester");
+                    System.out.println("press 1️ : 7rd semester");
+                    System.out.println("press 2️ : 8th semester");
                     boolean end5=true;
                     while(end5) {
-                        int selectSem3 = sc.nextInt();
+                        String selectSem3 = sc.next();
                         switch (selectSem3) {
-                            case 1:
+                            case "1":
                                 for (int i = 0; i < 7; i++) {
                                     semester[i] = new Semester(i + 1, matchSemesterAndDepartment(departmentName,i));
                                 }
                                 end5=false;
                                 break;
-                            case 2:
+                            case "2":
                                 for (int i = 0; i < 8; i++) {
                                     semester[i] = new Semester(i + 1, matchSemesterAndDepartment(departmentName,i));
                                 }
                                 end5=false;
                                 break;
                             default:
-                                System.out.println("****INVALID SEMESTER****");
+                                System.out.println("                   ❌ invalid");
+                                System.out.print(" Please enter again : ");
                         }
                     }
                     end1=false;
@@ -557,7 +571,7 @@ public class JavaApplication {
             facultyName=sc.next();
         }
         ArrayList<Subject> handlingSubjects = new ArrayList<>();
-        System.out.println("Select department : "+"\n"+" press 1 : cse "+"\n"+" press 2 : ece "+"\n"+" press 3 : mechanical "+"\n"+" press 4 : it ");
+        System.out.println("Select department : "+"\n"+" press 1️ : cse "+"\n"+" press 2️ : ece "+"\n"+" press 3️ : mechanical "+"\n"+" press 4️ : it ");
         String departmentNo = sc.next();
         while(!(departmentNo.matches("[1-4]"))){
             System.out.println("                   ❌ invalid");
@@ -580,10 +594,11 @@ public class JavaApplication {
                 break;
         }
         for(int i=0;i<8;i++) {
-            System.out.println("present!!! you are in "+(i+1)+" semester"+"\n"+"press 1 : enroll in current semester....."+"\n"+"press 2 : go to next semester....."+"\n"+"press 3 : end enroll process");
+            System.out.println("present!!! you are in "+(i+1)+" semester"+"\n"+"press 1️ : enroll in current semester....."+"\n"+"press 2️ : go to next semester....."+"\n"+"press 3 : end enroll process");
             String facultyOpinion1 = sc.next();
             while(!facultyOpinion1.matches("[1-3]")){
-                System.out.println("Invalid input...please enter again");
+                System.out.println("                   ❌ invalid");
+                System.out.print(" please enter again : ");
                 facultyOpinion1=sc.next();
             }
             int facultyOpinion = Integer.parseInt(facultyOpinion1);
@@ -592,14 +607,19 @@ public class JavaApplication {
                     if (subject.department.equals(department) && subject.facultyId == -1 && subject.semester == i) {
                         System.out.println(subject.subjectName + " has vacancy");
                         System.out.println("_*_*_*_*_*_*_*_*_*_*_*_*_*_*_");
-                        System.out.println("press 1 : enroll subject" + "\n" + "press 2 : select other subject");
-                        int selection = sc.nextInt();
-                        switch (selection) {
-                            case 1:
+                        System.out.println("press 1️ : enroll subject" + "\n" + "press 2️ : select other subject");
+                        String selection1 = sc.next();
+                        while(!selection1.matches("[1-2]")){
+                            System.out.println("                   ❌ invalid");
+                            System.out.println(" please enter again : ");
+                            selection1 = sc.next();
+                        }
+                        switch (selection1) {
+                            case "1":
                                 subject.setFacultyId(facultyId);
                                 handlingSubjects.add(new Subject(subject.subjectName, subject.department, i));
                                 break;
-                            case 2:
+                            case "2":
                                 break;
                         }
                     }
@@ -636,21 +656,21 @@ public class JavaApplication {
     public static void process() {
         while (end) {
             System.out.println("_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_");
-            System.out.println("type 1 : ADD STUDENT DETAILS: " +
-                    "\ntype 2 : SEE STUDENT DETAILS: " +
-                    "\ntype 3 : REMOVE STUDENT DETAILS: " +
-                    "\ntype 4 : UPDATE DETAILS: " +
-                    "\ntype 5 : ADD MARKS OF STUDNET: " +
-                    "\ntype 6 : SEARCH RECORD: " +
-                    "\ntype 7 : SHOW THE MARKS OF STUDENT: " +
-                    "\ntype 8 : UPDATE SCORE: "+
-                    "\ntype 9 : FIND STUDENT UNDER THE GUIDENCE OF FACULTY"+
-                    "\ntype 10 : ALL SEMESTER TOTAL MARKS : "+
-                    "\ntype 11 : UPDATE SEMESTER : "+
-                    "\ntype 12 : ADD FACULTY :"+
-                    "\ntype 13 : REMOVE FACULTY : "+
-                    "\ntype 14 : FACULTY MODIFICATION"+
-                    "\ntype 15 : END : ");
+            System.out.println("type 1️⃣ : ADD STUDENT DETAILS: " +
+                    "\ntype 2️⃣ : SEE STUDENT DETAILS: " +
+                    "\ntype 3️⃣ : REMOVE STUDENT DETAILS: " +
+                    "\ntype 4️⃣ : UPDATE DETAILS: " +
+                    "\ntype 5️⃣ : ADD MARKS OF STUDNET: " +
+                    "\ntype 6️⃣ : SEARCH RECORD: " +
+                    "\ntype 7️⃣ : SHOW THE MARKS OF STUDENT: " +
+                    "\ntype 8️⃣ : UPDATE SCORE: "+
+                    "\ntype 9️⃣ : FIND STUDENT UNDER THE GUIDENCE OF FACULTY"+
+                    "\ntype 1️0️⃣ : ALL SEMESTER TOTAL MARKS : "+
+                    "\ntype 1️⃣1️⃣ : UPDATE SEMESTER : "+
+                    "\ntype 1️⃣2️ : ADD FACULTY :"+
+                    "\ntype 1️⃣3️ : REMOVE FACULTY : "+
+                    "\ntype 1️⃣4️ : FACULTY MODIFICATION"+
+                    "\ntype 1️⃣5️ : END : ");
             System.out.println("_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_");
             String user = sc.next().toLowerCase();
             if (!(user.matches("\\d+"))) {
@@ -713,8 +733,8 @@ public class JavaApplication {
                             int studentId = Integer.parseInt(studId);
                             Student student = checkStudent(studentId);
                             if(student!=null) {
-                                System.out.println("press 1 : for academic details");
-                                System.out.println("press 2 : for student personal details");
+                                System.out.println("press 1️ : for academic details");
+                                System.out.println("press 2️ : for student personal details");
                                 String selector = checkStudentId(sc.next());
                                 int selectOption = Integer.parseInt(selector);
                                 switch (selectOption) {
@@ -1037,14 +1057,18 @@ public class JavaApplication {
                 System.out.println("successfully end the process");
                 System.out.println("******************************");
             }
+            else{
+                System.out.println("                   ❌ invalid");
+                System.out.print(" please enter again : ");
+            }
         }
     }
     public static int check()
     {
         sc=new Scanner(System.in);
         System.out.println(".*.*.*.*.*.*.*.*.WELCOME.*.*.*.*.*.*.*.*.*.");
-        System.out.println("press 1 : for signup (Create new account) "+"\n"+"press 2 : for signin (already existing account)");
-        System.out.print(".*.*.*.*.*.*.*.*.*.*."+"\n"+"type( 1 or 2 )...");
+        System.out.println("press 1️: for signup ( \uD83D\uDC49 Create new account) "+"\n"+"press 2️ : for signin ( \uD83D\uDC49 already existing account)");
+        System.out.print(".*.*.*.*.*.*.*.*.*.*."+"\n"+"type( 1️ or 2️ )...");
         String userRequire = sc.next();
         while(!userRequire.matches("[1-2]")){
             System.out.println("                               ✘ Invalid ");
@@ -1067,8 +1091,9 @@ public class JavaApplication {
                     email = sc.next();
                 }
                 System.out.println(" ✅ valid ");
-                System.out.println("_*_*_*_Password constraints_*_*_*_");
-                System.out.println(" ✅ atleast contains password length 8 and maximum length of 16"+"\n"+" ✅ doesn't start with small letter"+"\n"+" ✅ contains atleast one symbol of (. ,@ , $, # , &)"+"\n"+" ✅ conatins number and alphabets");
+                System.out.println("PASSWORD CONSTRAINTS");
+                System.out.println("_*_*_*_*_*_*_*_*_*_*");
+                System.out.println(" ❣ atleast contains password length 8 and maximum length of 16"+"\n"+" ❣ doesn't start with small letter"+"\n"+" ❣ contains atleast one symbol of (. ,@ , $, # , &)"+"\n"+" ❣ conatins number and alphabets");
                 System.out.println("eg.password : Murthy.aa@1");
                 System.out.print("Enter the password :");
                 String password = sc.next();
