@@ -203,9 +203,11 @@ public class JavaApplication {
                 for(Subject subject : SubjectDetails.subjectDetails){
                     if(subject.facultyId==facultyId){
                         for(Student student : StudentDetails.studentDetails){
-                            if(student.semester[findSemesterNumber(student)-1].subject[findSemesterNumber(student)-1].subjectName.equals(subject.subjectName)){
-                                System.out.println(student);
-                                countOfFacultyHandlingSubjects++;
+                            for(int i=0;i<student.semester[findSemesterNumber(student)-1].subject.length;i++) {
+                                if (student.semester[findSemesterNumber(student) - 1].subject[i].subjectName.equals(subject.subjectName)) {
+                                    System.out.println(student);
+                                    countOfFacultyHandlingSubjects++;
+                                }
                             }
                         }
                     }
