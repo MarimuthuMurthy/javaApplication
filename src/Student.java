@@ -1,40 +1,4 @@
-class Semester{
-    int semesterNumber;
-    int marks;
-    SubjectWithMarks[] subject;
-    Semester(int semesterNumber,SubjectWithMarks[] subject)
-    {
-        this.semesterNumber=semesterNumber;
-        this.subject = subject;
-    }
-    public void setSemesterTotalMarks(int marks){
-        this.marks=marks;
-    }
-}
-class Subject{
-    String subjectName;
-    String department;
-    int semester;
-    int facultyId;
-    Subject(String subjectName,String department,int semester ){
-        this.subjectName=subjectName;
-        this.department = department;
-        this.semester = semester;
-        this.facultyId=-1;
-    }
-    public void setFacultyId(int facultyId){
-        this.facultyId=facultyId;
-    }
-}
-class SubjectWithMarks extends Subject{
-    int subjectMarks;
-    SubjectWithMarks(String subjectName, String department, int semester,int marks) {
-        super(subjectName, department, semester);
-        this.subjectMarks=-1;
-    }
-}
-class Student
-{
+public class Student {
     public int studentId;
     public String studentName;
     public String phoneNo;
@@ -77,26 +41,3 @@ class Student
                 " \n"+"*********************************";
     }
 }
-
-class Address{
-    String doorNo;
-    String street;
-    String city;
-    String state;
-    Address(String doorNo,String street,String city,String state){
-        this.doorNo=doorNo;
-        this.state=state;
-        this.street=street;
-        this.city=city;
-    }
-    public String toString(){
-        return  "*******ADDRESS*******"+
-                "\n"+"Door number : "+doorNo+
-                "\n"+"street Name : "+street+
-                "\n"+"city Name   : "+city+
-                "\n"+"state       : "+state+
-                "\n"+"********************";
-    }
-}
-
-

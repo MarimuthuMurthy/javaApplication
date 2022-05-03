@@ -13,7 +13,7 @@ class CseSubjectsAndFaculty {
 class CseDepartment{
     static String[][] cseSubjects = {CseSubjectsAndFaculty.cseSubjectsSemester1, CseSubjectsAndFaculty.cseSubjectsSemester2, CseSubjectsAndFaculty.cseSubjectsSemester3, CseSubjectsAndFaculty.cseSubjectsSemester4, CseSubjectsAndFaculty.cseSubjectsSemester5, CseSubjectsAndFaculty.cseSubjectsSemester6, CseSubjectsAndFaculty.cseSubjectsSemester7, CseSubjectsAndFaculty.cseSubjectsSemester8};
 }
-    class EceSubjectsAndFaculty {
+class EceSubjectsAndFaculty {
         static String[] eceSubjectsSemester1 = {"analog", "system", "communication", "wireless", "networks"};
         static String[] eceSubjectsSemester2 = {"Analog Electronics", "Signal & System", "Electromagnetic Theory", "Digital Signal Processing", "Analog and Digital Communications"};
         static String[] eceSubjectsSemester3 = {"Integrated Electronics", "Communication Network", "Antenna and Microwave Propagation", "Microprocessor & Microcontroller", "Fiber-Optic and Satellite Communications Systems"};
@@ -26,8 +26,7 @@ class CseDepartment{
 class EceDepartment{
     static String[][] eceSubjects = {EceSubjectsAndFaculty.eceSubjectsSemester1, EceSubjectsAndFaculty.eceSubjectsSemester2, EceSubjectsAndFaculty.eceSubjectsSemester3, EceSubjectsAndFaculty.eceSubjectsSemester4, EceSubjectsAndFaculty.eceSubjectsSemester5, EceSubjectsAndFaculty.eceSubjectsSemester6, EceSubjectsAndFaculty.eceSubjectsSemester7, EceSubjectsAndFaculty.eceSubjectsSemester8};
 }
-
-        class MechanicalSubjectAndFaculty {
+class MechanicalSubjectAndFaculty {
             static String[] mechanicalSubjectsSemester1 = {"Thermodynamics", "Solid Mechanics - I", "Engineering Materials", "HSS Elective - I", "Machine Drawing"};
             static String[] mechanicalSubjectsSemester2 = {"Fluid Mechanics - I", "Manufacturing Technology - I", "Solid Mechanics - II", "Kinematics of Machinery", "HSS Elective  - II"};
             static String[] mechanicalSubjectsSemester3 = {"Workshop  - II", "Mechanical Lab - I", "Fluid Mechanics - II", "Manufacturing Technology - II", "Dynamics of Machinery"};
@@ -40,7 +39,6 @@ class EceDepartment{
 class MechanicalDepartment {
     static String[][] mechanicalSubjects = {MechanicalSubjectAndFaculty.mechanicalSubjectsSemester1, MechanicalSubjectAndFaculty.mechanicalSubjectsSemester2, MechanicalSubjectAndFaculty.mechanicalSubjectsSemester3, MechanicalSubjectAndFaculty.mechanicalSubjectsSemester4, MechanicalSubjectAndFaculty.mechanicalSubjectsSemester5, MechanicalSubjectAndFaculty.mechanicalSubjectsSemester6, MechanicalSubjectAndFaculty.mechanicalSubjectsSemester7, MechanicalSubjectAndFaculty.mechanicalSubjectsSemester8};
 }
-
 class ItsubjectsAndFaculty {
         static String[] itSubjectsSemester1 = {"Computer", "Architecture", "Organization", "object", "orineted"};
         static String[] itSubjectsSemester2 = {"programming", "Operating ", "Systems", "computer", "networks"};
@@ -51,15 +49,15 @@ class ItsubjectsAndFaculty {
         static String[] itSubjectsSemester7 = {"Systems", "multimedia", "communiaction", "oose", "microcontroller"};
         static String[] itSubjectsSemester8 = {"engineering mathematics", "engineering", "graphics", "agile", "scrum"};
     }
-    class ItDepartment{
+class ItDepartment{
         static String[][] itTotalSubjects = {ItsubjectsAndFaculty.itSubjectsSemester1,ItsubjectsAndFaculty.itSubjectsSemester2,ItsubjectsAndFaculty.itSubjectsSemester3,ItsubjectsAndFaculty.itSubjectsSemester4,ItsubjectsAndFaculty.itSubjectsSemester5,ItsubjectsAndFaculty.itSubjectsSemester6,ItsubjectsAndFaculty.itSubjectsSemester7,ItsubjectsAndFaculty.itSubjectsSemester8};
 }
-    class StudentDetails{
-        static List<Student> studentDetails=new ArrayList<>();
-    }
-    class SubjectDetails{
+class StudentDetails{
+    static List<Student> studentDetails=new ArrayList<>();
+}
+class SubjectDetails{
     static List<Subject> subjectDetails = new ArrayList<>();
-    }
-    class FacultyDetails{
+}
+class FacultyDetails{
     static List<Faculty> facultyDetails = new ArrayList<>();
-    }
+}
