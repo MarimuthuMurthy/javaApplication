@@ -1,4 +1,4 @@
-public class Student {
+public class Student implements StudentScoreCard{
     public int studentId;
     public String studentName;
     public String phoneNo;
@@ -17,7 +17,19 @@ public class Student {
         this.add=add;
         this.semester=semester;
     }
-    public void scoreCard(int semNumber){
+    public String toString(){
+        return "***********************************"+
+                " \n"+"Student Id :" + studentId+
+                " \n"+"Student Name :"+studentName+
+                " \n"+"Student PhoneNO. :"+phoneNo+
+                " \n"+"Student RoomNo :"+roomNo+" "+
+                " \n"+"Student Hostel :"+hostelName+
+                " \n"+"Student Department :"+department+
+                " \n"+"*********************************";
+    }
+
+    @Override
+    public void scoreCard(int semNumber) {
         for(int i=0;i<semNumber;i++){
             System.out.println("******* SEMESTER "+(i+1)+" MARKS*******");
             for (SubjectWithMarks subject : semester[i].subject) {
@@ -29,15 +41,5 @@ public class Student {
             }
             System.out.println("*************************************");
         }
-    }
-    public String toString(){
-        return "***********************************"+
-                " \n"+"Student Id :" + studentId+
-                " \n"+"Student Name :"+studentName+
-                " \n"+"Student PhoneNO. :"+phoneNo+
-                " \n"+"Student RoomNo :"+roomNo+" "+
-                " \n"+"Student Hostel :"+hostelName+
-                " \n"+"Student Department :"+department+
-                " \n"+"*********************************";
     }
 }
