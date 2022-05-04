@@ -865,7 +865,7 @@ public class JavaApplication {
                                     String newRoomNo=sc.next();
                                     while(!newRoomNo.matches("[0-9]{3,9}")){System.out.println("INVALID ROOMNUMBER,REENTER NEW ROOMNUMBER");
                                         newRoomNo= sc.next();}
-                                    s.transport.changeRoom(Integer.parseInt(newRoomNo));
+                                    s.stayLocation.changeRoom(Integer.parseInt(newRoomNo));
                                 }
                             System.out.println("*******SUCESSFULLY UPDATED********");
 

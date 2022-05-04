@@ -13,9 +13,6 @@ class StayInHostel implements stayLocation{
         this.hostelName= hostelName;
         this.roomNo = roomNo;
     }
-    public String toString(){
-        return hostelName +"\n"+roomNo;
-    }
 
     @Override
     public void changePlace(String place) {
@@ -25,6 +22,9 @@ class StayInHostel implements stayLocation{
     @Override
     public void changeRoom(int room) {
         this.roomNo = room;
+    }
+    public String toString(){
+        return "hostel name : "+hostelName +"\n"+"hostel room no :"+roomNo;
     }
 }
 class StayInHouse implements stayLocation{
@@ -45,5 +45,8 @@ class StayInHouse implements stayLocation{
     @Override
     public void changeRoom(int room) {
     this.doorno = room;
+    }
+    public String toString(){
+        return "city name : "+city +"\n"+"door no :"+doorno;
     }
 }
