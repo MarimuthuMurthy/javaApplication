@@ -1,6 +1,6 @@
 class StudentScoreCard
 {
-     public static void scoreCard(Student s)
+    public static void scoreCard(Student s)
      {
           int semNumber = JavaApplication.findSemesterNumber(s);
         for(int i=0;i<semNumber;i++){
