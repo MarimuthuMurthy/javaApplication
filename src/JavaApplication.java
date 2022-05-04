@@ -380,29 +380,50 @@ public class JavaApplication {
         String cityName = nameValidation(sc.nextLine());
         System.out.print("Enter State Name : ");
         String stateName = nameValidation(sc.nextLine());
-        System.out.println(" Select Your Favourite Hostel ");
-        System.out.println( "press 1️⃣:Prince hostel"+
-                           "\n"+"press 2️⃣:Leaders hostel");
-        String studentHostel = sc.next();
-        int studentHostel1=Integer.parseInt(studentHostel);
-        switch(studentHostel1){
-            case 1:
-                studentHostel="prince";
-                break;
-            case 2:
-                studentHostel="leaders";
-                break;
-            default:
-                throw new StudentException(" Sorry! you are not allowed in this institute ");
-        }
-        System.out.print("Enter student room no:");
-        String studentRoom = sc.next();
-        while (!checkRoomNo(studentRoom)) {
+        System.out.println("You are from Hostel or dayscholar : "+"\n"+"press 1 : Iam from hostel "+"\n"+"press 2 : Iam dayscholar");
+        String number  = sc.next();
+        while(!number.matches("[1-2]")){
             System.out.println("                   ❌ invalid");
             System.out.print(" please enter again : ");
-            studentRoom = sc.next();
+            number =sc.next();
         }
-        int intStudentRoom=Integer.parseInt(studentRoom);
+        stayLocation stayLocation = null;
+        switch(number) {
+            case "1":
+                System.out.println(" Select Your Favourite Hostel ");
+                System.out.println("press 1️⃣:Prince hostel" +
+                        "\n" + "press 2️⃣:Leaders hostel");
+                String studentHostel = sc.next();
+                int studentHostel1 = Integer.parseInt(studentHostel);
+                switch (studentHostel1) {
+                    case 1:
+                        studentHostel = "prince";
+                        break;
+                    case 2:
+                        studentHostel = "leaders";
+                        break;
+                    default:
+                        throw new StudentException(" Sorry! you are not allowed in this institute ");
+                }
+                System.out.print("Enter student room no:");
+                String studentRoom = sc.next();
+                while (!checkRoomNo(studentRoom)) {
+                    System.out.println("                   ❌ invalid");
+                    System.out.print(" please enter again : ");
+                    studentRoom = sc.next();
+                }
+                int intStudentRoom = Integer.parseInt(studentRoom);
+                stayLocation = new StayInHostel();
+                stayLocation.stayDetails(cityName ,intStudentRoom);
+                break;
+            case "2":
+                System.out.print("Enter your city : ");
+                String city = sc.next();
+                System.out.print("Enter your doorNo : ");
+                int doorNo = sc.nextInt();
+                stayLocation = new StayInHouse();
+                stayLocation.stayDetails(city,doorNo);
+        }
         Semester[] semester=new Semester[8] ;
         System.out.println(" Select Current Study Year   ");
         System.out.println("press 1️⃣ : 1st year"+"\n"+"press 2️⃣ : 2nd year"+"\n"+"press 3️⃣ : 3rd year"+"\n"+"press 4️⃣ : 4th year");
@@ -553,7 +574,7 @@ public class JavaApplication {
         }
         studentId += 1;
         Address add=new Address(doorNumber,streetName,cityName,stateName);
-        return new Student(studentId, studentName, studentPhone, intStudentRoom, studentHostel,departmentName,add,semester);
+        return new Student(studentId, studentName, studentPhone, stayLocation,departmentName,add,semester);
     }
     public static Faculty facultyDetails() {
         Faculty f;
@@ -844,7 +865,7 @@ public class JavaApplication {
                                     String newRoomNo=sc.next();
                                     while(!newRoomNo.matches("[0-9]{3,9}")){System.out.println("INVALID ROOMNUMBER,REENTER NEW ROOMNUMBER");
                                         newRoomNo= sc.next();}
-                                    s.roomNo = Integer.parseInt(newRoomNo);
+                                    s.transport.changeRoom(Integer.parseInt(newRoomNo));
                                 }
                             System.out.println("*******SUCESSFULLY UPDATED********");
 
@@ -907,7 +928,7 @@ public class JavaApplication {
                     int switch1 = sc.nextInt();
                     switch (switch1) {
                         case 1:
-                            s.scoreCard(semNumber);
+                            StudentScoreCard.scoreCard(s);
                             break;
                         case 2:
                             System.out.println("You are in "+(semNumber) +" semester");
