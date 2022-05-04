@@ -13,21 +13,36 @@ final class Validation {
     final private String password4="abc@1234";
     final private String email5="vtu15896@veltech.edu.in";
     final private String password5="abc@12345";
-    private Map<String,String> lhs=new HashMap<>();
+    private Map<String,String> storingCredentials=new HashMap<>();
     final private String authorization="5656";
     Validation()
     {
-        lhs.put(email1,password1);
-        lhs.put(email2,password2);
-        lhs.put(email3,password3);
-        lhs.put(email4,password4);
-        lhs.put(email5,password5);
+        storingCredentials.put(email1,password1);
+        storingCredentials.put(email2,password2);
+        storingCredentials.put(email3,password3);
+        storingCredentials.put(email4,password4);
+        storingCredentials.put(email5,password5);
     }
-    public void addCredentials(String email , String password)
-    {
-        lhs.put(email,password);
+    Set<String> keys=storingCredentials.keySet();
+    public int login(String email,String password) {
+        for(String key:keys) {
+            if(key.equals(email) && storingCredentials.get(key).equals(password)) {
+                return 1;
+            }
+        }
+        return 0;
     }
-    Set<String> keys=lhs.keySet();
+    public Map<String,String> getLhs(){
+        return storingCredentials;
+    }
+    public String getAuthorization(){
+        return authorization;
+    }
+}
+class CheckDuplication
+{
+    Validation validation = new Validation();
+    Set<String> keys=validation.getLhs().keySet();
     public boolean checkDupliaction(String email)
     {
         for(String key:keys)
@@ -39,19 +54,18 @@ final class Validation {
         }
         return false;
     }
-    public int checkCredentials(String email,String password)
+}
+class AddCredentials{
+    Validation validation = new Validation();
+    public void addCredentials(String email , String password)
     {
-        for(String key:keys)
-        {
-            if(key.equals(email) && lhs.get(key).equals(password))
-            {
-                return 1;
-            }
-        }
-        return 0;
+        validation.getLhs().put(email,password);
     }
+}
+class CheckAuthorization{
+    Validation validation = new Validation();
     public int checkAuthorization(String updateAuthorization)
     {
-        if(updateAuthorization.equals(authorization)){return 1;}else{return 0;}
+        if(updateAuthorization.equals(validation.getAuthorization())){return 1;}else{return 0;}
     }
 }

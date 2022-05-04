@@ -713,7 +713,7 @@ public class JavaApplication {
                                         System.out.println(student);
                                         break;
                                     case 2:
-                                        System.out.println(student.add);
+                                        System.out.println(student.homeLocation);
                                         break;
                                     default:
                                         System.out.println("Invalid Input");
@@ -777,8 +777,8 @@ public class JavaApplication {
                     System.out.println("type!!!!numbers between 0-9");
                     pin = sc.next();
                 }
-                Validation v1=new Validation();
-                if (v1.checkAuthorization(pin) == 1) {
+                CheckAuthorization checkAuthorization = new CheckAuthorization();
+                if (checkAuthorization.checkAuthorization(pin) == 1) {
                     if (StudentDetails.studentDetails.isEmpty()) {
                         System.out.println("NO RECORDS FOUND");
                     } else {
@@ -1048,16 +1048,18 @@ public class JavaApplication {
         }
         System.out.println(" ✅ valid ");
         Validation v1=new Validation();
+        CheckDuplication checkDuplication = new CheckDuplication();
+        AddCredentials addCredentials = new AddCredentials();
         switch(userRequire){
             case "1":
                 System.out.print("Enter new email id : ");
                 String email = sc.next();
-                while(!email.matches("[a-zA-Z0-9]+@[a-zA-Z]+.[a-z]+.*[a-z]*")){
+                while(!email.matches("[a-zA-Z0-9]+@[a-zA-Z]+.+[a-z]+.*[a-z]*")){
                     System.out.println("                               ✘ Invalid ");
                     System.out.print("Enter again : ");
                     email = sc.next();
                 }
-                while(v1.checkDupliaction(email)){
+                while(checkDuplication.checkDupliaction(email)){
                     System.out.print("Email id already registered....Enter new email address : ");
                     email = sc.next();
                 }
@@ -1068,21 +1070,21 @@ public class JavaApplication {
                 System.out.println("eg.password : Murthy.aa@1");
                 System.out.print("Enter the password :");
                 String password = sc.next();
-                while(!password.matches("[A-Z]{1}[A-Za-z0-9@$#&.]{2,15}")){
+                while(!password.matches("[A-Z][A-Za-z0-9@$#&.]{2,15}")){
                     System.out.println("✘ Invalid " );
                     System.out.print("Password doesnt match our requirement Enter again : ");
                     password = sc.next();
                 }
                 System.out.println(" ✅ valid");
                 System.out.println("Account added successfully....");
-                v1.addCredentials(email,password);
+                addCredentials.addCredentials(email,password);
                 return 1;
             case "2":
                 System.out.print("Enter email id : ");
                 String adminEmail=sc.next();
                 System.out.print("Enter Password : ");
                 String adminPassword =sc.next();
-                if(v1.checkCredentials(adminEmail,adminPassword)==1){
+                if(v1.login(adminEmail,adminPassword)==1){
                     return 1;
                 }
                 break;

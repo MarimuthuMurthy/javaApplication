@@ -2,7 +2,7 @@ class StudentScoreCard
 {
     public static void scoreCard(Student s)
      {
-          int semNumber = JavaApplication.findSemesterNumber(s);
+         int semNumber = JavaApplication.findSemesterNumber(s);
         for(int i=0;i<semNumber;i++){
             System.out.println("******* SEMESTER "+(i+1)+" MARKS*******");
             for (SubjectWithMarks subject : s.semester[i].subject) {

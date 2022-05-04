@@ -3,16 +3,16 @@ public class Student {
     public String studentName;
     public String phoneNo;
     public String department;
-    public Address add;
+    public Address homeLocation;
     public Semester[] semester;
     public stayLocation stayLocation;
-    Student(int studentId,String studentName,String phoneNo,stayLocation stayLocation,String department,Address add,Semester[] semester){
+    Student(int studentId,String studentName,String phoneNo,stayLocation stayLocation,String department,Address homeLocation,Semester[] semester){
         this.studentId=studentId;
         this.studentName=studentName;
         this.phoneNo=phoneNo;
         this.stayLocation = stayLocation;
         this.department=department;
-        this.add=add;
+        this.homeLocation=homeLocation;
         this.semester=semester;
     }
     public String toString(){
